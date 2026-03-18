@@ -34,9 +34,6 @@ set_keyboard      proc    far
         push    dx
         push    bx
 
-        mov     ax,dseg
-        mov     ds,ax
-
         mov     ah,35h          ; code lecture d'un vecteur d'interuption
         mov     al,09h          ; index de la table de vecteur qui coresspond au clavier
         int     21h             ; requete a DOS
@@ -73,9 +70,6 @@ unset_keyboard      proc    far
         push    ax
         push    dx
 
-        mov     ax,dseg
-        mov     ds,ax
-
         mov     ax,old_isr
         mov     dx,ax
         mov     ax,old_isr+2
@@ -109,9 +103,6 @@ keyboard_handler    proc    far
         push    ds
         push    es
         push    si
-
-        mov     ax,dseg
-        mov     ds,ax
 
         mov     ah,0
         in      al,60h          ;Read scan code from keyboard

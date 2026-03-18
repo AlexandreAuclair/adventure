@@ -13,14 +13,14 @@ stacks  segment      stack
 stacks  ends
 ;----------------------- stack segment end -------------------------+
 ;----------------------- data area begins --------------------------+
-dseg    segment public                  ; data segment starts here
+dseg   segment para public 'DATA'       ; data segment starts here
 ;
 MSG             DB      "HELLO GAMERZ!"
 ;
 dseg    ends                            ; data segment ends here
 ;----------------------- data area ends ----------------------------+
 ;----------------------- code area starts --------------------------+
-codes   segment
+codes   segment 
 
         assume  cs:codes, ds:dseg, ss:stacks
 MAIN    proc    far

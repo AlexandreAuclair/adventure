@@ -1,16 +1,19 @@
 ; GAME MODULE - FILE GAME.ASM
 ;
 include KEYBOARD.INC
+include OBJECT.INC
 ;---------------------------------data area begins------------------+
 dseg   segment para public 'DATA'                 ; data segment starts here
 ;
 isRunning       db      0
+
+player          Object  <>
 ;
 dseg   ends                            ; data segment ends here
 ;----------------------------------data area ends-------------------+
 ;
 ;----------------------- code area starts --------------------------+
-codes   segment
+codes   segment 
 ;
 ;+++++++++++++++++++++++ public declarations start ++++++++++++++++++
         public  setup,input,update,render,running,clean
@@ -36,12 +39,12 @@ setup      proc    far
         push    ax
 
         sti
-        mov     ax,dseg
-        mov     ds,ax
 
-        mov     al,1
-        mov     isRunning,al
+        mov     ds:isRunning,1
         call    set_keyboard
+
+        mov     player.x,60
+        mov     player.y,20
 
         MOV     AH, 0      ; 0=SET VIDEO MODE (AL=MODE)
         MOV     AL, 14     ; MODE 14 (EGA 320x200 16 colors)
@@ -67,16 +70,12 @@ input      proc    far
         push    ax
         push    si
 
-        mov     ax,dseg
-        mov     ds,ax
-
         mov     si,KEY_ESC
         mov     al, Keys[si]
         cmp     al,0
         je      exit
         
-        mov     al,0
-        mov     isRunning,al
+        mov     ds:isRunning,0
 exit:
         pop     si
         pop     ax
@@ -111,6 +110,10 @@ update      endp
 ;--------------------------------------------------------------------
 ; render all the game object and background
 render      proc    far
+
+        mov     cx,player.x
+        mov     ax,player.y
+        
         call    draw_sprite
         RET
 render      endp
@@ -129,10 +132,7 @@ render      endp
 running      proc    far
         push    ds
 
-        mov     ax,dseg
-        mov     ds,ax
-
-        mov     al,isRunning
+        mov     al,ds:isRunning
 
         pop     ds
         ret

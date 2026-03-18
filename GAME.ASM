@@ -18,6 +18,7 @@ codes   segment
 ;
 ;++++++++++++++++++++++++++++++++ externals begin +++++++++++++++++++
         extrn  set_keyboard:far,unset_keyboard:far,Keys:BYTE
+        extrn  draw_sprite:far
 ;+++++++++++++++++++++++++++++++++ externals end ++++++++++++++++++++
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
@@ -110,6 +111,7 @@ update      endp
 ;--------------------------------------------------------------------
 ; render all the game object and background
 render      proc    far
+        call    draw_sprite
         RET
 render      endp
 ;----------------------- routine ends ------------------------------+

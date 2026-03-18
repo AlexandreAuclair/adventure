@@ -32,6 +32,9 @@ MAIN    proc    far
         mov     ax,dseg
         mov     ds,ax
 
+        mov     ax,0A000h
+        mov     es,ax
+
         call    setup
 
 main_loop:

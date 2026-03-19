@@ -1,4 +1,3 @@
 *.OBJ
 *.COM
-LINK.EXE
-MASM.EXE
+*.EXE

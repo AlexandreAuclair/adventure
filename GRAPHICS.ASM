@@ -37,6 +37,35 @@ sprite  DW 0000h, 0F0FFh, 0F5FFh, 0500h, 0000h, 0FF0Fh, 0FFEFh, 00E0h
         DW 1E00h, 06E8h, 00E8h, 1E00h, 003Ch, 5F04h, 5F00h, 003Ch
         DW 1E00h, 02FAh, 00FAh, 1E00h, 0000h, 0FF02h, 0FF02h, 0000h
 
+tileset DW 0000h, 31FCh, 31FCh, 0CE03h, 0000h, 0CEE3h, 00E0h, 351Dh
+        DW 0000h, 0CECBh, 00C0h, 0FF37h, 0000h, 0FFAFh, 0080h, 0FF5Fh
+        DW 0000h, 0FF3Fh, 0000h, 0FFFFh, 0000h, 0FF7Fh, 0000h, 0FFBFh
+        DW 0000h, 0FFFFh, 0080h, 0FF7Fh, 0000h, 0FF7Fh, 0000h, 0FFBFh
+        DW 0000h, 0FF3Fh, 0000h, 0FFDFh, 0000h, 0FFBFh, 0080h, 0FF7Fh
+        DW 0000h, 0FF1Fh, 0000h, 0FFFFh, 0000h, 0FF3Fh, 0000h, 0FFDFh
+        DW 0000h, 0FF7Fh, 0000h, 0FFBFh, 0000h, 0FFFFh, 0080h, 0FF7Fh
+        DW 0000h, 0FFBFh, 0080h, 0FF7Fh, 0000h, 0FF1Fh, 0000h, 0FFFFh
+
+        DW 0000h, 318Ch, 318Ch, 0CE73h, 0000h, 0CE73h, 0000h, 0B5ADh
+        DW 0000h, 0CE73h, 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh
+        DW 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh
+        DW 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh
+        DW 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh
+        DW 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh
+        DW 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh
+        DW 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh, 0000h, 0FFFFh
+
+        DW 0000h, 3F8Ch, 3F8Ch, 0C073h, 0000h, 0C773h, 0700h, 0B8ACh
+        DW 0000h, 0D373h, 0300h, 0ECFFh, 0000h, 0F5FFh, 0100h, 0FAFFh
+        DW 0000h, 0FCFFh, 0000h, 0FFFFh, 0000h, 0FEFFh, 0000h, 0FDFFh
+        DW 0000h, 0FFFFh, 0100h, 0FEFFh, 0000h, 0FEFFh, 0000h, 0FDFFh
+        DW 0000h, 0FCFFh, 0000h, 0FBFFh, 0000h, 0FDFFh, 0100h, 0FEFFh
+        DW 0000h, 0F8FFh, 0000h, 0FFFFh, 0000h, 0FCFFh, 0000h, 0FBFFh
+        DW 0000h, 0FEFFh, 0000h, 0FDFFh, 0000h, 0FFFFh, 0100h, 0FEFFh
+        DW 0000h, 0FDFFh, 0100h, 0FEFFh, 0000h, 0F8FFh, 0000h, 0FFFFh
+
+
+
 anim    db      0
 ;
 dseg   ends                            ; data segment ends here
@@ -46,7 +75,7 @@ dseg   ends                            ; data segment ends here
 codes   segment
 ;
 ;+++++++++++++++++++++++ public declarations start ++++++++++++++++++
-        public  draw_sprite
+        public  draw_sprite, draw_background
 ;+++++++++++++++++++++++ public declarations end ++++++++++++++++++++
 ;
         assume  cs:codes, ds:dseg
@@ -84,16 +113,16 @@ draw_sprite      proc    far
         mov     si, offset sprite
         mov     al,ds:anim
         cmp     al,0
-        je      draw
+        je      draw_sprite1
         add     si,256
-draw:
+draw_sprite1:
         ; Set Write Plane Mask to Plane 0
         mov     dx, 03C4h
         mov     al, 02h
 
-y_loop:
+draw_sprite_y:
         mov     cx,2
-x_loop:
+draw_sprite_x:
         ; Set Write Plane Mask to Plane 0
         mov     ah,01h
         out     dx, ax
@@ -121,20 +150,20 @@ x_loop:
         sub     di,2
         movsw               ; Copy to video memory
 
-        loop    x_loop
+        loop    draw_sprite_x
         sub     di,4
         add     di,50h
         cmp     di,bx
-        jl      y_loop
+        jl      draw_sprite_y
 
         mov     al,ds:anim
         cmp     al,0
-        jne     changeTo0
+        jne     draw_sprite_anim
         mov     ds:anim,1
-        jmp     end
-changeTo0:
+        jmp     draw_sprite_end
+draw_sprite_anim:
         mov     ds:anim,0
-end:
+draw_sprite_end:
         pop     bx
         pop     cx
         pop     dx
@@ -144,6 +173,95 @@ end:
         pop     ds
         ret
 draw_sprite      endp
+;----------------------- routine ends ------------------------------+
+;
+;----------------------- routines begins ---------------------------+
+;FUNCTION: This routine send word to the video memory 4 planes to 
+; writes a background at the specified location
+;INPUT:  CX and BX are given the x and y respectively and AL is given
+; the index of the bg sprite
+;OUTPUT: None
+;REGISTERS USED: None
+;SEGMENTS REFERENCED: None
+;ROUTINES CALLED: None
+;SPECIAL NOTES: None
+;--------------------------------------------------------------------
+; setup the keyboard for the game
+draw_background      proc    far
+        push    ds
+        push    si
+        push    di
+        push    ax
+        push    dx
+        push    cx
+        push    bx
+
+        mov     si, offset tileset      ; get the address
+        mov     bx,128                  ; multiply the sprite index
+        mul     bx                      ; by 128 to get the proper
+        add     si,bx                   ; address
+
+        pop     bx                      ; get the y coordinate back
+        push    bx
+        xchg    ax,bx                   ; put the y coord in AX
+
+        ; position = (y*80) + (x/8)
+        mov     bx, 80
+        mul     bx
+        shr     cx, 1
+        shr     cx, 1
+        shr     cx, 1
+        add     ax,cx
+        mov     di,ax           ; Video memory offset
+        mov     bx,ax
+        add     bx,500h 
+
+        ; Set Write Plane Mask to Plane 0
+        mov     dx, 03C4h
+        mov     al, 02h
+
+draw_background_y:
+        ; Set Write Plane Mask to Plane 0
+        mov     ah,01h
+        out     dx, ax
+        movsw               ; Copy to video memory
+
+
+        ; Set Write Plane Mask to Plane 1 
+        mov     ah,02h
+        out     dx,ax
+
+        sub     di,2
+        movsw               ; Copy to video memory
+
+        ; Set Write Plane Mask to Plane 2
+        mov     ah,04h
+        out     dx,ax
+
+        sub     di,2
+        movsw               ; Copy to video memory
+
+        ; Set Write Plane Mask to Plane 3
+        mov     ah, 08h
+        out     dx, ax
+
+        sub     di,2
+        movsw               ; Copy to video memory
+
+        sub     di,2
+        add     di,50h
+        cmp     di,bx
+        jl      draw_background_y
+
+        pop     bx
+        pop     cx
+        pop     dx
+        pop     ax
+        pop     di
+        pop     si
+        pop     ds
+        ret
+draw_background      endp
 ;----------------------- routine ends ------------------------------+
 
 

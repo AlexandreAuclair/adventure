@@ -18,13 +18,16 @@ codes   segment
 ;
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
-;FUNCTION: None
+;FUNCTION: This routine save the old interrupt subroutine into 
+; OLD_ISR, then set the new isr as the KEYBOARD_HANDLER routine
 ;INPUT:  None
 ;OUTPUT: None
-;REGISTERS USED: None
-;SEGMENTS REFERENCED: None
+;REGISTERS USED: No register is used. AX, BX, DX, DS and ES are use
+; for transfering the address.
+;SEGMENTS REFERENCED: Segment DSEG is use to store the old isr.
 ;ROUTINES CALLED: None
-;SPECIAL NOTES: None
+;SPECIAL NOTES: If you don't call UNSET_KEYBOARD at the end of the 
+; program, you won't be able to type.
 ;--------------------------------------------------------------------
 ; setup the keyboard for the game
 set_keyboard      proc    far
@@ -55,12 +58,16 @@ set_keyboard      proc    far
         ret
 set_keyboard      endp
 ;----------------------- routine ends ------------------------------+
+;
 ;----------------------- routines begins ---------------------------+
-;FUNCTION: None
+;FUNCTION: This routine take the old interrupt subroutine of the 
+; keyboard from the OLD_ISR variable and put it back into the
+; interrupt vector.
 ;INPUT:  None
 ;OUTPUT: None
-;REGISTERS USED: None
-;SEGMENTS REFERENCED: None
+;REGISTERS USED: No register is used. AX, DX and DS are used to 
+; transfer the address into the interrupt vector
+;SEGMENTS REFERENCED: Segment DSEG is use to store the old isr.
 ;ROUTINES CALLED: None
 ;SPECIAL NOTES: None
 ;--------------------------------------------------------------------
@@ -74,8 +81,8 @@ unset_keyboard      proc    far
         mov     dx,ax
         mov     ax,old_isr+2
         mov     ds,ax
-        mov     ax,2509h
-        int     21h
+        mov     ax,2509h	; set new interrupt vector with
+        int     21h             ; address in DS:DX to index in AL
 
         pop     dx
         pop     ax
@@ -84,14 +91,15 @@ unset_keyboard      proc    far
         ret
 unset_keyboard      endp
 ;----------------------- routine ends ------------------------------+
-
+;
 ;----------------------- routines begins ---------------------------+
 ;FUNCTION: This routine handles how the computer respond to keyboard 
 ; pressed.
 ;INPUT:  None
 ;OUTPUT: None
-;REGISTERS USED: None
-;SEGMENTS REFERENCED: None
+;REGISTERS USED: No register are used. AX,DX are use to old integers.
+; DS is used to access the KEYS array. SI is use to count the index.
+;SEGMENTS REFERENCED: DSEG is use to store the KEYS array
 ;ROUTINES CALLED: None
 ;SPECIAL NOTES: None
 ;--------------------------------------------------------------------
@@ -101,7 +109,6 @@ keyboard_handler    proc    far
         push    ax
         push    dx
         push    ds
-        push    es
         push    si
 
         mov     ah,0
@@ -133,7 +140,6 @@ store_key:
         out     20h,al
 
         pop     si
-        pop     es
         pop     ds
         pop     dx
         pop     ax

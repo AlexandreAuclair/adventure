@@ -16,7 +16,7 @@ def closest_ega_color(color):
 
 def convert_to_interleaved_words(file_path):
     image = Image.open(file_path)
-    image = image.resize((32, 32))
+    image = image.resize((16, 16))
     image = image.convert("RGB")
 
     width_bytes = image.width // 8  # 40 bytes par ligne

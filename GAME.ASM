@@ -86,22 +86,22 @@ input      proc    far
         mov     si,KEY_KEYPAD_8
         cmp     ds:Keys[si],0
         je      no_up
-        sub     player.y,2
+        sub     player.y,4
 no_up:
         mov     si,KEY_KEYPAD_2
         cmp     ds:Keys[si],0
         je      no_down
-        add     player.y,2
+        add     player.y,4
 no_down:
         mov     si,KEY_KEYPAD_4
         cmp     ds:Keys[si],0
         je      no_left
-        sub     player.x,2
+        sub     player.x,8
 no_left:
         mov     si,KEY_KEYPAD_6
         cmp     ds:Keys[si],0
         je      no_right
-        add     player.x,2
+        add     player.x,8
 no_right:
 
 

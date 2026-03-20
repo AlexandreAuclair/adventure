@@ -225,12 +225,13 @@ draw_sprite      proc    far
         push    cx
         push    bx
 
-        ; position = (y*80) + (x/16)
+        ; position = (y*80) + (x/8)
         mov     bx, 80
         mul     bx
+
         shr     cx, 1
         shr     cx, 1
-        shr     cx, 1
+        shr     cx, 1           ; x/8
         add     ax,cx
         mov     di,ax           ; Video memory offset
         mov     bx,ax

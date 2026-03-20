@@ -35,7 +35,7 @@ codes   segment
 ;++++++++++++++++++++++++++++++++ externals begin +++++++++++++++++++
         extrn  set_keyboard:far,unset_keyboard:far,Keys:BYTE
         extrn  draw_sprite:far,draw_background:far
-        extrn  sendBufferToVRAM:far
+        extrn  sendBufferToVRAM:far,dec8out:far
 ;+++++++++++++++++++++++++++++++++ externals end ++++++++++++++++++++
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
@@ -80,9 +80,30 @@ setup      endp
 ;--------------------------------------------------------------------
 ; check for player input
 input      proc    far
-        push    ds
         push    ax
         push    si
+
+        mov     si,KEY_KEYPAD_8
+        cmp     ds:Keys[si],0
+        je      no_up
+        sub     player.y,2
+no_up:
+        mov     si,KEY_KEYPAD_2
+        cmp     ds:Keys[si],0
+        je      no_down
+        add     player.y,2
+no_down:
+        mov     si,KEY_KEYPAD_4
+        cmp     ds:Keys[si],0
+        je      no_left
+        sub     player.x,2
+no_left:
+        mov     si,KEY_KEYPAD_6
+        cmp     ds:Keys[si],0
+        je      no_right
+        add     player.x,2
+no_right:
+
 
         mov     si,KEY_ESC
         mov     al, ds:Keys[si]
@@ -93,7 +114,6 @@ input      proc    far
 exit:
         pop     si
         pop     ax
-        pop     ds
         RET
 input      endp
 ;----------------------- routine ends ------------------------------+
@@ -109,6 +129,7 @@ input      endp
 ;--------------------------------------------------------------------
 ; update any object position or logic of the game
 update      proc    far
+        
         RET
 update      endp
 ;----------------------- routine ends ------------------------------+

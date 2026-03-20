@@ -111,38 +111,55 @@ keyboard_handler    proc    far
         push    ds
         push    si
 
-        mov     ah,0
+        mov     ax, dseg        ; Charge le segment où se trouve ton tableau Keys
+        mov     ds, ax
+
+        cli
+
         in      al,60h          ;Read scan code from keyboard
-        mov     dl,al           ;store in DL
+
+        ; --- FILTRE : Ignorer les codes étendus (0E0h) ---
+        cmp     al, 0E0h        ; Est-ce un préfixe étendu ?
+        je      kbd_ack         ; Si oui, on saute directement à l'acquittement
+                                ; sans rien enregistrer dans Keys.
 
         test    al,80h          ;check if break code (key released)
         jz      key_pressed
 
         and     al,7fh          ;convert break code to make code
         mov     dh,0            ;dh = 0 (key released)
+        
         jmp     store_key
 
 key_pressed:
         mov     dh,1            ;dh = 1 (key pressed)
 
 store_key:
+        xor     ah,ah
         mov     si,ax           ;SI = scan code
-        mov     [Keys + SI],dh  ;Store key state in array
+        mov     [ds:Keys + SI],dh  ;Store key state in array
 
 ;Acknowledge the keyboard controller
+kbd_ack:
         in      al,61h          ;check kbd status port
+        mov     ah,al
         or      al,80h          ;Disable the keyboard
         out     61h,al
-        and     al,7fh          ;re-enable the keyboard
+        nop
+        nop
+        mov     al,ah
         out     61h,al
 ;Send End-of-Interrupt (EOI) signal to the PIC
         mov     al,20h
         out     20h,al
 
+        sti     
+
         pop     si
         pop     ds
         pop     dx
         pop     ax
+        
         iret
 
 keyboard_handler        endp

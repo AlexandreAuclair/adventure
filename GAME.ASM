@@ -105,8 +105,6 @@ setup      proc    far
 
         mov     ds:isRunning,1
         call    set_keyboard
-        call    SetPIT
-        call    InstallIRQ0
 
         mov     player.x,60
         mov     player.y,20
@@ -255,7 +253,6 @@ running      endp
 ; clean the computer memory
 clean      proc    far
         call    unset_keyboard
-        call    RestoreIRQ0
 
         MOV     AH, 0      ; 0=SET VIDEO MODE (AL=MODE)
         MOV     AL, 2      ; MODE 2 (CGA 80x25 txt 16 colors)

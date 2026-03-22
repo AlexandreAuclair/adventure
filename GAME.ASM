@@ -9,18 +9,66 @@ isRunning       db      0
 
 player          Object  <>
 
-background      DB      0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2
-                DB      0,1,1,1,1,1,1,1,5,6,7,8,9,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,2
-                DB      0,2,2,2,2,2,2,2,5,6,7,8,9,10,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,3,2
-                DB      0,1,1,1,1,1,1,1,5,6,7,8,9,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,2
-                DB      0,1,1,1,1,1,1,1,5,6,7,8,9,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,2
-                DB      0,2,2,2,2,2,2,2,5,6,7,8,9,10,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,3,2
-                DB      0,1,1,1,1,1,1,1,5,6,7,8,9,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,2
-                DB      0,1,1,1,1,1,1,1,5,6,7,8,9,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,2
-                DB      0,11,12,13,14,2,2,2,5,6,7,8,9,10,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,3,2
-                DB      0,1,1,1,1,1,1,1,5,6,7,8,9,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,4,3,2
-                DB      0,1,1,1,1,1,1,1,5,6,7,8,9,10,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,15,3,2
-                DB      0,2,2,2,2,2,2,2,5,6,7,8,9,10,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,4,3,2
+background      DB      0Ch,20h,39h,15h,15h,38h,22h,3Dh,3Dh,3Dh
+                DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh
+                DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh
+                DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,0Eh
+
+                DB      0Ch,3Dh,20h,39h,38h,22h,0Dh,0Dh,3Dh,0Dh
+                DB      0Dh,0Dh,0Dh,0Dh,3Dh,3Dh,0Dh,0Dh,3Dh,0Dh
+                DB      0Dh,0Dh,3Dh,0Dh,59h,0Dh,0Dh,0Dh,0Dh,0Dh
+                DB      0Dh,3Dh,0Dh,0Dh,0Dh,3Dh,0Dh,59h,0Dh,0Eh
+                
+                DB      0Ch,0Dh,3Dh,14h,16h,0Dh,0Dh,59h,3Dh,3Dh
+                DB      0Dh,59h,59h,0Dh,04h,05h,05h,05h,05h,05h
+                DB      05h,05h,05h,06h,0Dh,0Dh,3Dh,0Dh,0Dh,3Dh
+                DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,0Dh,0Dh,0Dh,0Eh
+
+                DB      0Ch,0Dh,3Dh,14h,16h,3Dh,3Dh,3Dh,3Dh,3Dh
+                DB      3Dh,3Dh,0Dh,0Dh,10h,11h,11h,71h,11h,40h
+                DB      71h,40h,11h,5Ah,05h,06h,3Dh,3Dh,3Dh,3Dh
+                DB      0Dh,0Dh,3Dh,3Dh,3Dh,0Dh,0Dh,0Dh,0Dh,0Eh
+
+                DB      0Ch,0Dh,3Dh,14h,16h,3Dh,0Dh,0Dh,04h,05h
+                DB      05h,05h,05h,05h,5Bh,11h,11h,11h,71h,11h
+                DB      40h,40h,11h,11h,11h,5Ah,05h,06h,3Dh,3Dh
+                DB      3Dh,3Dh,3Dh,3Dh,2Fh,3Dh,3Dh,0Dh,0Dh,0Eh
+
+                DB      0Ch,3Dh,3Dh,14h,16h,3Dh,3Dh,04h,5Bh,11h
+                DB      11h,11h,11h,11h,11h,11h,11h,11h,11h,40h
+                DB      11h,11h,40h,11h,11h,11h,11h,5Bh,05h,05h
+                DB      06h,3Dh,3Dh,3Dh,0Dh,0Dh,0Dh,0Dh,3Dh,0Eh
+
+                DB      29h,29h,29h,0ABh,0ABh,29h,29h,0AAh,11h,11h
+                DB      11h,11h,40h,71h,11h,11h,11h,11h,11h,27h
+                DB      40h,11h,11h,40h,71h,40h,71h,40h,11h,11h
+                DB      5Ah,06h,0Dh,3Dh,3Dh,3Dh,3Dh,3Dh,0Dh,0Eh
+
+                DB      0Ch,0Dh,0Dh,14h,16h,0Dh,3Dh,1Ch,1Dh,4Fh
+                DB      11h,40h,71h,40h,11h,11h,11h,40h,71h,40h
+                DB      71h,11h,11h,11h,11h,11h,11h,11h,11h,11h
+                DB      11h,12h,0Dh,3Dh,3Dh,3Dh,3Dh,3Dh,0Dh,0Eh
+
+                DB      0Ch,0Dh,3Dh,14h,16h,0Dh,3Dh,3Dh,3Dh,1Ch
+                DB      4Fh,11h,11h,40h,40h,11h,11h,71h,40h,71h
+                DB      11h,11h,4Eh,1Dh,1Dh,1Dh,1Dh,4Fh,11h,11h
+                DB      4Eh,1Eh,3Dh,0Dh,0Dh,3Dh,3Dh,3Dh,0Dh,0Eh
+
+                DB      0Ch,0Dh,3Dh,14h,16h,0Dh,0Dh,0Dh,0Dh,3Dh
+                DB      1Ch,1Dh,1Dh,1Dh,1Dh,1Dh,1Dh,1Dh,1Dh,1Dh
+                DB      1Dh,1Dh,1Eh,3Dh,3Dh,3Dh,0Dh,1Ch,1Dh,1Dh
+                DB      1Eh,0Dh,0Dh,0Dh,0Dh,3Dh,3Dh,3Dh,3Dh,0Eh
+
+                DB      0Ch,0Dh,0Dh,14h,16h,0Dh,0Dh,59h,0Dh,0Dh
+                DB      0Dh,59h,59h,0Dh,0Dh,3Dh,3Dh,0Dh,0Dh,59h
+                DB      0Dh,0Dh,59h,0Dh,0Dh,3Dh,0Dh,0Dh,0Dh,0Dh
+                DB      0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Eh
+
+                DB      18h,19h,19h,14h,16h,19h,19h,19h,19h,19h
+                DB      19h,19h,19h,19h,19h,19h,19h,19h,19h,19h
+                DB      19h,19h,19h,19h,19h,19h,19h,19h,19h,19h
+                DB      19h,19h,19h,19h,19h,19h,19h,19h,19h,1Ah
+
 ;
 dseg   ends                            ; data segment ends here
 ;----------------------------------data area ends-------------------+
@@ -36,6 +84,7 @@ codes   segment
         extrn  set_keyboard:far,unset_keyboard:far,Keys:BYTE
         extrn  draw_sprite:far,draw_background:far
         extrn  sendBufferToVRAM:far,dec8out:far
+        extrn  SetPIT:far,InstallIRQ0:far,RestoreIRQ0:far
 ;+++++++++++++++++++++++++++++++++ externals end ++++++++++++++++++++
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
@@ -56,6 +105,8 @@ setup      proc    far
 
         mov     ds:isRunning,1
         call    set_keyboard
+        call    SetPIT
+        call    InstallIRQ0
 
         mov     player.x,60
         mov     player.y,20
@@ -204,6 +255,7 @@ running      endp
 ; clean the computer memory
 clean      proc    far
         call    unset_keyboard
+        call    RestoreIRQ0
 
         MOV     AH, 0      ; 0=SET VIDEO MODE (AL=MODE)
         MOV     AL, 2      ; MODE 2 (CGA 80x25 txt 16 colors)

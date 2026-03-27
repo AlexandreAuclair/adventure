@@ -79,11 +79,8 @@ music           db      093h,044h,094h,005h,092h,000h,000h,000h,000h ;00
 old_int8        dw      2 dup(0)
 current_order   db      0
 current_row     db      0
-speed           db      6      ; ticks per row
+speed           db      4      ; ticks per row
 tick_counter    db      0
-
-pattern_ptr     dw      0
-order_table     dw      128 dup(0)
 
 curr_key        db      9 dup(0)
 curr_note       db      9 dup(0)
@@ -154,7 +151,8 @@ sameNote:
         shr     al,1
         shr     al,1
         shr     al,1            ; hi nibble is now low nibble
-        mov     si,ax
+        xor     ah,ah
+        mov     di,ax
         call    TonePlay
 nextNote:
         loop    set_note_for_the_9_channels
@@ -409,7 +407,7 @@ TonePlay        proc    near
         mov     al,0A0h
         add     al,bl
         ; FFFFFFFF F=Fnumber L
-        mov     dx,note_table[si]    ; F number
+        mov     dx,note_table[di]    ; F number
         mov     ah,dl
         call    setAdLibReg
 

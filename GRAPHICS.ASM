@@ -37,6 +37,23 @@ sprite  DW 0000h, 0F0FFh, 0F5FFh, 0500h, 0000h, 0FF0Fh, 0FFEFh, 00E0h
         DW 1E00h, 06E8h, 00E8h, 1E00h, 003Ch, 5F04h, 5F00h, 003Ch
         DW 1E00h, 02FAh, 00FAh, 1E00h, 0000h, 0FF02h, 0FF02h, 0000h
 
+shrek   DW 0000h, 1300h, 0000h, 1300h, 0000h, 30E4h, 0000h, 30E4h
+        DW 0000h, 0E3Ch, 0004h, 0C38h, 0000h, 3CD8h, 0000h, 3CD8h
+        DW 8000h, 0FE7Eh, 9810h, 606Eh, 0002h, 0FEDFh, 080Ah, 0F6D5h
+        DW 0000h, 0FDFFh, 1800h, 0E0FFh, 0000h, 0FFFFh, 8408h, 7BE7h
+        DW 0000h, 0FEFFh, 3860h, 0C09Fh, 0000h, 0BC7Fh, 001Ch, 0FC63h
+        DW 0000h, 0FF39h, 3E08h, 0C037h, 0400h, 0FCFFh, 047Ch, 0F803h
+        DW 0000h, 7F1Fh, 7F00h, 001Fh, 0000h, 70FCh, 00FCh, 7000h
+        DW 0000h, 7F00h, 3E00h, 4100h, 0000h, 00FCh, 003Ch, 00C0h
+        DW 0000h, 7F00h, 0000h, 7F00h, 0000h, 00FCh, 0000h, 00FCh
+        DW 0000h, 4F00h, 0000h, 7F00h, 0000h, 00F4h, 0000h, 00FCh
+        DW 0000h, 0FF00h, 0700h, 0F800h, 0000h, 00FEh, 00F2h, 000Ch
+        DW 0000h, 0FF00h, 0FF00h, 0000h, 0020h, 00FFh, 00FFh, 0000h
+        DW 0000h, 0F000h, 0F000h, 0000h, 0000h, 001Eh, 001Eh, 0000h
+        DW 0000h, 0000h, 0000h, 0C001h, 0000h, 000Eh, 000Eh, 0000h
+        DW 0000h, 0000h, 0000h, 8007h, 0000h, 0000h, 0000h, 801Fh
+        DW 0000h, 0000h, 0000h, 0000h, 0000h, 0000h, 0000h, 0C001h
+
 tileset DW 0000h, 31FCh, 31FCh, 0CE03h, 0000h, 0CEE3h, 00E0h, 351Dh ;sprite 0
         DW 0000h, 0CECBh, 00C0h, 0FF37h, 0000h, 0FFAFh, 0080h, 0FF5Fh
         DW 0000h, 0FF3Fh, 0000h, 0FFFFh, 0000h, 0FF7Fh, 0000h, 0FFBFh
@@ -1765,8 +1782,6 @@ tileset DW 0000h, 31FCh, 31FCh, 0CE03h, 0000h, 0CEE3h, 00E0h, 351Dh ;sprite 0
         DW 0000h, 0000h, 0000h, 0000h, 0000h, 0000h, 0000h, 0000h
         DW 0000h, 0000h, 0000h, 0000h, 0000h, 0000h, 0000h, 0000h
 
-anim    db      0
-
 
 ;
 dseg   ends                            ; data segment ends here
@@ -1791,7 +1806,8 @@ codes   segment
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
 ;FUNCTION: This routine send word to the video memory 4 planes
-;INPUT:  CX and AX are given the x and y respectively
+;INPUT:  CX and AX are given the x and y respectively. SI is given
+; the sprite index to draw
 ;OUTPUT: None
 ;REGISTERS USED: None
 ;SEGMENTS REFERENCED: None
@@ -1825,11 +1841,10 @@ draw_sprite      proc    far
         mov     es,ax
 
         ;draw bitmap
-        mov     si, 0
-        mov     al,ds:anim
-        cmp     al,0
-        je      draw_sprite_y
-        add     si,256
+        ;mov     al,ds:anim
+        ;cmp     al,0
+        ;je      draw_sprite_y
+        ;add     si,256
 
 draw_sprite_y:
         mov     cx,2
@@ -1861,13 +1876,13 @@ draw_sprite_x:
         cmp     di,bx
         jl      draw_sprite_y
 
-        mov     al,ds:anim
-        cmp     al,0
-        jne     draw_sprite2
-        mov     ds:anim,1
-        jmp     draw_sprite_end
+        ;mov     al,ds:anim
+        ;cmp     al,0
+        ;jne     draw_sprite2
+        ;mov     ds:anim,1
+        ;jmp     draw_sprite_end
 draw_sprite2:
-        mov     ds:anim,0
+        ;mov     ds:anim,0
 draw_sprite_end:
         pop     bx
         pop     cx

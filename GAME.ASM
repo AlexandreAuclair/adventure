@@ -8,6 +8,7 @@ dseg   segment para public 'DATA'                 ; data segment starts here
 isRunning       db      0
 
 player          Object  <>
+enemies         Object  <>
 
 background      DB      0Ch,20h,39h,15h,15h,38h,22h,3Dh,3Dh,3Dh
                 DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh
@@ -84,7 +85,6 @@ codes   segment
         extrn  set_keyboard:far,unset_keyboard:far,Keys:BYTE
         extrn  draw_sprite:far,draw_background:far
         extrn  sendBufferToVRAM:far,dec8out:far
-        extrn  SetPIT:far,InstallIRQ0:far,RestoreIRQ0:far
 ;+++++++++++++++++++++++++++++++++ externals end ++++++++++++++++++++
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
@@ -108,6 +108,9 @@ setup      proc    far
 
         mov     player.x,60
         mov     player.y,20
+
+        mov     enemies.x,600
+        mov     enemies.y,100
 
         MOV     AH, 0      ; 0=SET VIDEO MODE (AL=MODE)
         MOV     AL, 14     ; MODE 14 (EGA 320x200 16 colors)
@@ -211,9 +214,14 @@ x_loop:
         cmp     bx,184
         jl      y_loop
 
-
+        mov     si,0
         mov     cx,player.x
         mov     ax,player.y
+        call    draw_sprite
+
+        mov     si,512
+        mov     cx,enemies.x
+        mov     ax,enemies.y
         call    draw_sprite
 
         call    sendBufferToVRAM

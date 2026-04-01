@@ -3,9 +3,11 @@
 include KEYBOARD.INC
 include OBJECT.INC
 ;---------------------------------data area begins------------------+
-dseg   segment para public 'DATA'                 ; data segment starts here
+dseg   segment para public 'DATA'  ; data segment starts here
 ;
 isRunning       db      0
+tick_walk       db      0
+direction       db      0
 
 player          Object  <>
 enemies         Object  <>
@@ -84,7 +86,8 @@ codes   segment
 ;++++++++++++++++++++++++++++++++ externals begin +++++++++++++++++++
         extrn  set_keyboard:far,unset_keyboard:far,Keys:BYTE
         extrn  draw_sprite:far,draw_background:far
-        extrn  sendBufferToVRAM:far,dec8out:far
+        extrn  sendBufferToVRAM:far,dec16out:far,pseudorandom:far
+        extrn  dist:far,checkdist16:far
 ;+++++++++++++++++++++++++++++++++ externals end ++++++++++++++++++++
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
@@ -108,9 +111,13 @@ setup      proc    far
 
         mov     player.x,60
         mov     player.y,20
+        mov     player.radius,400h      ; radius^2
 
         mov     enemies.x,600
         mov     enemies.y,100
+        mov     enemies.radius,400h
+
+        
 
         MOV     AH, 0      ; 0=SET VIDEO MODE (AL=MODE)
         MOV     AL, 14     ; MODE 14 (EGA 320x200 16 colors)
@@ -121,6 +128,7 @@ setup      proc    far
         RET
 setup      endp
 ;----------------------- routine ends ------------------------------+
+;
 ;----------------------- routines begins ---------------------------+
 ;FUNCTION: None
 ;INPUT:  None
@@ -181,6 +189,45 @@ input      endp
 ;--------------------------------------------------------------------
 ; update any object position or logic of the game
 update      proc    far
+
+        cmp     ds:tick_walk,0
+        je      change_direction
+        inc     ds:tick_walk
+        cmp     ds:tick_walk,20
+        jne     .continue
+        mov     ds:tick_walk,0
+        jmp     .continue
+change_direction:
+        inc     ds:tick_walk
+        call    pseudorandom
+        mov     dx,0
+        mov     cx,4
+        div     cx              ; divide to get a num between 0-3
+
+        mov     ds:direction,dl
+.continue:
+        call    move_enemy
+
+checkForCol:
+        mov     di,player.x     ; take the x point
+        add     di,16           ; put it at the middle
+        mov     dx,player.y     ; take the y point
+        add     dx,8            ; put it at the middle
+        mov     si,enemies.x
+        add     si,16
+        mov     cx,enemies.y
+        add     cx,8
+        mov     ax,0
+        call    checkdist16
+        cmp     ax,0
+        jne     noCollision
+        call    dist            ; now AX has dist^2
+        cmp     ax,enemies.radius
+        ja      noCollision
+        mov     ds:isRunning,0
+noCollision:
+        
+        
         
         RET
 update      endp
@@ -269,6 +316,49 @@ clean      proc    far
 
         ret
 clean      endp
+;----------------------- routine ends ------------------------------+
+;
+;----------------------- routines begins ---------------------------+
+;FUNCTION: None
+;INPUT:  None
+;OUTPUT: None
+;REGISTERS USED: None
+;SEGMENTS REFERENCED: None
+;ROUTINES CALLED: None
+;SPECIAL NOTES: None
+;--------------------------------------------------------------------
+; clean the computer memory
+move_enemy      proc    near
+        cmp     ds:direction,0
+        je      moveNorth
+        cmp     ds:direction,1
+        je      moveEast
+        cmp     ds:direction,2
+        je      moveSouth
+        cmp     ds:direction,3
+        je      moveWest
+moveNorth:
+        cmp     enemies.y,0
+        jle     .end
+        dec     enemies.y
+        jmp     .end
+moveEast:
+        cmp     enemies.x,608
+        jge     .end
+        inc     enemies.x
+        jmp     .end
+moveSouth:
+        cmp     enemies.y,184
+        jge     .end
+        inc     enemies.y
+        jmp     .end
+moveWest:
+        cmp     enemies.x,0
+        jle     .end
+        dec     enemies.x
+.end:
+        ret
+move_enemy      endp
 ;----------------------- routine ends ------------------------------+
 codes   ends
 ;----------------------- code area ends ----------------------------+

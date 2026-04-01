@@ -4,4 +4,5 @@ Object STRUC
     y       DW ?
     sprite  DW ?
     dead    DB ?
+    radius  DW ?
 Object ENDS

@@ -85,6 +85,9 @@ tick_counter    db      0
 curr_key        db      9 dup(0)
 curr_note       db      9 dup(0)
 
+mes             db      "hello"
+mes1            db      "nooo"
+
 ;
 dseg   ends                            ; data segment ends here
 ;----------------------------------data area ends-------------------+
@@ -102,7 +105,7 @@ codes   segment
 ;+++++++++++++++++++++++ public declarations end ++++++++++++++++++++
 ;
 ;++++++++++++++++++++++++++++++++ externals begin +++++++++++++++++++
-        extrn
+        extrn  stdmessout:far
 ;+++++++++++++++++++++++++++++++++ externals end ++++++++++++++++++++
         assume  cs:codes, ds:dseg
 
@@ -113,7 +116,7 @@ main            proc    far
 
         mov     ax,dseg
         mov     ds,ax
-
+        
         call    SetAdlib
 
         mov     cx,9

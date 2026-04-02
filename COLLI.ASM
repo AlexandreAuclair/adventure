@@ -29,20 +29,22 @@ codes   segment
 ;--------------------------------------------------------------------
 ; calculate the distance between 2 points
 dist        proc    far
+        push    bx
 
         sub     cx,dx       ; y2 - y1
+        shl     cx,1
         mov     ax,cx       
-        mov     bx,cx
-        mul     bx          ; dy^2
+        imul    cx          ; dy^2
 
-        mov     cx,ax
+        mov     bx,ax
 
         sub     si,di       ; x2 - x1
         mov     ax,si       
-        mov     bx,si
-        mul     bx          ; dx^2
+        imul    si          ; dx^2
 
-        add     ax,cx       ; dx + dy
+        add     ax,bx       ; dx + dy
+
+        pop     bx
         
         ret
 
@@ -67,13 +69,19 @@ checkdist16     proc    far
         push    cx
 
         sub     si,di
+        jns     .ok
+        neg     si
+.ok:
         cmp     si,255
         jb      checkY
         mov     ah,1
         jmp     .end
 checkY:
         sub     cx,dx
-        cmp     cx,255
+        jns     .ok2
+        neg     cx
+.ok2:
+        cmp     cx,50
         jb      .end
         mov     al,1
 .end:

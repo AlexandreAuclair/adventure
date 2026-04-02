@@ -208,7 +208,12 @@ change_direction:
 .continue:
         call    move_enemy
 
-checkForCol:
+
+        cmp     player.hit,0
+        je      checkForCol
+        dec     player.hit
+        jmp     noCollision
+checkForCol:  
         mov     di,player.x     ; take the x point
         add     di,16           ; put it at the middle
         mov     dx,player.y     ; take the y point
@@ -224,7 +229,7 @@ checkForCol:
         call    dist            ; now AX has dist^2
         cmp     ax,enemies.radius
         ja      noCollision
-        mov     ds:isRunning,0
+        mov     player.hit,25
 noCollision:
         
         
@@ -261,11 +266,17 @@ x_loop:
         cmp     bx,184
         jl      y_loop
 
+        mov     al,player.hit
+        and     al,1
+        cmp     al,0
+        jne     renderEnemies
+renderPlayer:
         mov     si,0
         mov     cx,player.x
         mov     ax,player.y
         call    draw_sprite
 
+renderEnemies:
         mov     si,512
         mov     cx,enemies.x
         mov     ax,enemies.y

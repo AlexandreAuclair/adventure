@@ -1805,16 +1805,18 @@ codes   segment
 ;
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
-;FUNCTION: This routine send word to the video memory 4 planes
+;FUNCTION: This routine send word to the buffer memory 4 planes
 ;INPUT:  CX and AX are given the x and y respectively. SI is given
 ; the sprite index to draw
-;OUTPUT: None
-;REGISTERS USED: None
-;SEGMENTS REFERENCED: None
+;OUTPUT: There is no output.
+;REGISTERS USED: No registers are modified. DS and ES are used to
+; hold the data segment. SI is used for index sprite. DI is used for
+; position index for the buffer. AX,DX,CX,BX are use to calculate. 
+;SEGMENTS REFERENCED: The DSEG and BSEG segment are used
 ;ROUTINES CALLED: None
 ;SPECIAL NOTES: None
 ;--------------------------------------------------------------------
-; setup the keyboard for the game
+; send the sprite to the buffer at the right position
 draw_sprite      proc    far
         push    ds
         push    es

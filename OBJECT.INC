@@ -5,4 +5,5 @@ Object STRUC
     sprite  DW ?
     dead    DB ?
     radius  DW ?
+    hit     DB ?
 Object ENDS

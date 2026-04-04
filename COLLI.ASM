@@ -72,7 +72,7 @@ checkdist16     proc    far
         jns     .ok
         neg     si
 .ok:
-        cmp     si,255
+        cmp     si,50
         jb      checkY
         mov     ah,1
         jmp     .end

@@ -72,6 +72,7 @@ background      DB      0Ch,20h,39h,15h,15h,38h,22h,3Dh,3Dh,3Dh
                 DB      19h,19h,19h,19h,19h,19h,19h,19h,19h,19h
                 DB      19h,19h,19h,19h,19h,19h,19h,19h,19h,1Ah
 
+act1            db      "Epstein's Island",10,"The new adventure begin!",0
 ;
 dseg   ends                            ; data segment ends here
 ;----------------------------------data area ends-------------------+
@@ -87,7 +88,7 @@ codes   segment
         extrn  set_keyboard:far,unset_keyboard:far,Keys:BYTE
         extrn  draw_sprite:far,draw_background:far
         extrn  sendBufferToVRAM:far,dec16out:far,pseudorandom:far
-        extrn  dist:far,checkdist16:far
+        extrn  dist:far,checkdist16:far,print_text:far
 ;+++++++++++++++++++++++++++++++++ externals end ++++++++++++++++++++
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
@@ -281,6 +282,9 @@ renderEnemies:
         mov     cx,enemies.x
         mov     ax,enemies.y
         call    draw_sprite
+
+        lea     si,act1
+        call    print_text
 
         call    sendBufferToVRAM
         RET

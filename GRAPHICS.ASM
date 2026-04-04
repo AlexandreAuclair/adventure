@@ -1795,12 +1795,17 @@ plane3  dw      8000 dup(0)
 bseg   ends
 ;----------------------------------data area ends-------------------+
 ;
+;++++++++++++++++++++++ equates declarations start ++++++++++++++++++
+ROMFont         equ     0F000h
+ROMFontOfs      equ     0FA6Eh
+;++++++++++++++++++++++ equates declarations end ++++++++++++++++++++
 ;
 ;----------------------- code area starts --------------------------+
 codes   segment
 ;
 ;+++++++++++++++++++++++ public declarations start ++++++++++++++++++
         public  draw_sprite, draw_background, sendBufferToVRAM
+        public  print_text
 ;+++++++++++++++++++++++ public declarations end ++++++++++++++++++++
 ;
         assume  cs:codes, ds:dseg
@@ -1978,6 +1983,93 @@ draw_background_y:
         pop     ds
         ret
 draw_background      endp
+;----------------------- routine ends ------------------------------+
+;
+;----------------------- routines begins ---------------------------+
+;FUNCTION: This routine send word to the video memory 4 planes to 
+; writes a background at the specified location
+;INPUT: SI is the index of the message.
+; the index of the bg sprite
+;OUTPUT: None
+;REGISTERS USED: None
+;SEGMENTS REFERENCED: None
+;ROUTINES CALLED: None
+;SPECIAL NOTES: None
+;--------------------------------------------------------------------
+; print text at a certain location
+print_text      proc    far
+        push    ds
+        push    es
+        push    si
+        push    di
+        push    ax
+        push    dx
+        push    cx
+        push    bx
+
+        mov     ax,dseg
+        mov     ds,ax
+
+        mov     ax,bseg
+        mov     es,ax
+
+        mov     di,659h         ; x:200,y:20 
+print_char:
+        mov     al,ds:[si]      ; load the char
+        cmp     al,0
+        je      .end
+        cmp     al,10
+        je      lineFeed
+        jne     print
+lineFeed:
+        mov     ax,di
+        mov     bx,80
+        div     bx
+        sub     di,dx
+        add     di,665
+        inc     si
+        jmp     print_char
+print:
+        mov     cx,0            ;loop 8 times
+        xor     ax,ax
+lineOfFont:
+        mov     al,ds:[si]      ; load the char
+        mov     bx,8
+        mul     bx              ; *8
+        add     ax,cx           ; + the line to send
+        mov     bx,ax           
+        push    es
+        push    si
+        mov     ax, ROMFont     
+        mov     es, ax          ; addr F000:FA6Eh
+        mov     si, ROMFontOfs
+        xor     ax,ax
+        mov     al,es:[si+bx]   ; get the byte bitmap
+        pop     si
+        pop     es
+        mov     es:plane0[di],ax
+        mov     es:plane1[di],ax
+        mov     es:plane2[di],ax
+        mov     es:plane3[di],ax
+        add     di,80
+        inc     cx
+        cmp     cx,8
+        jb      lineOfFont
+        sub     di,639
+        inc     si
+        jmp     print_char
+
+.end:
+        pop     bx
+        pop     cx
+        pop     dx
+        pop     ax
+        pop     di
+        pop     si
+        pop     es
+        pop     ds
+        ret
+print_text      endp
 ;----------------------- routine ends ------------------------------+
 ;
 ;----------------------- routines begins ---------------------------+

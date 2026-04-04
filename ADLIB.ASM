@@ -76,15 +76,15 @@ music           db      000h,072h,071h,000h,000h,000h,000h,000h,000h ;00
                 db      082h,000h,000h,000h,000h,000h,000h,000h,000h ;3E
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;3F
 
-instrument      db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 1
-                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0FAh,001h,002h,004h,000h ; 2
-                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0FAh,001h,002h,004h,000h ; 3
-                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0FAh,001h,002h,004h,000h ; 4
-                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 5
-                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 6
-                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 7
+instrument      db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 9
                 db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 8
-                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 9
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 7
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 6
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F6h,001h,002h,004h,000h ; 5
+                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0F4h,001h,002h,004h,000h ; 4
+                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0F4h,001h,002h,004h,000h ; 3
+                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0F4h,001h,002h,004h,000h ; 2
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F6h,001h,002h,004h,000h ; 1
 
 old_int8        dw      2 dup(0)
 current_order   db      0

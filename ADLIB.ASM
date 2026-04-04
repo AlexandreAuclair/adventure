@@ -11,7 +11,7 @@ note_table      dw      157h,16Bh,181h,198h,1B0h,1CAh,1E5h,202h,220h
 
 octave          db      0
 
-music           db      093h,044h,094h,005h,092h,000h,000h,000h,000h ;00
+music           db      000h,072h,071h,000h,000h,000h,000h,000h,000h ;00
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;01
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;02
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;03
@@ -19,15 +19,15 @@ music           db      093h,044h,094h,005h,092h,000h,000h,000h,000h ;00
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;05
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;06
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;07
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;08
+                db      073h,000h,000h,000h,000h,000h,000h,000h,000h ;08
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;09
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;0A
+                db      083h,000h,000h,000h,000h,000h,000h,000h,000h ;0A
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;0B
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;0C
+                db      000h,023h,072h,032h,000h,000h,000h,000h,000h ;0C
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;0D
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;0E
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;0F
-                db      043h,044h,074h,0B4h,042h,000h,000h,000h,000h ;10
+                db      0a3h,072h,071h,000h,000h,000h,000h,000h,000h ;10
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;11
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;12
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;13
@@ -35,46 +35,56 @@ music           db      093h,044h,094h,005h,092h,000h,000h,000h,000h ;00
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;15
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;16
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;17
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;18
+                db      093h,000h,000h,000h,000h,000h,000h,000h,000h ;18
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;19
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;1A
+                db      0a3h,000h,000h,000h,000h,000h,000h,000h,000h ;1A
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;1B
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;1C
+                db      000h,023h,072h,032h,000h,000h,000h,000h,000h ;1C
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;1D
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;1E
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;1F
-                db      023h,024h,064h,094h,022h,000h,000h,000h,000h ;20
+                db      000h,072h,071h,000h,000h,000h,000h,000h,000h ;20
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;21
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;22
+                db      093h,000h,000h,000h,000h,000h,000h,000h,000h ;22
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;23
-                db      000h,000h,000h,0B4h,000h,000h,000h,000h,000h ;24
+                db      0a3h,000h,000h,000h,000h,000h,000h,000h,000h ;24
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;25
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;26
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;27
-                db      000h,000h,000h,074h,000h,000h,000h,000h,000h ;28
+                db      093h,000h,000h,000h,000h,000h,000h,000h,000h ;27
+                db      0a3h,0a2h,022h,000h,000h,000h,000h,000h,000h ;28
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;29
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;2A
+                db      023h,000h,000h,000h,000h,000h,000h,000h,000h ;2A
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;2B
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;2C
+                db      000h,023h,0a2h,032h,000h,000h,000h,000h,000h ;2C
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;2D
-                db      000h,000h,000h,064h,000h,000h,000h,000h,000h ;2E
+                db      033h,000h,000h,000h,000h,000h,000h,000h,000h ;2E
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;2F
-                db      003h,073h,004h,044h,002h,000h,000h,000h,000h ;30
+                db      023h,072h,071h,000h,000h,000h,000h,000h,000h ;30
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;31
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;32
+                db      033h,000h,000h,000h,000h,000h,000h,000h,000h ;32
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;33
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;34
+                db      053h,000h,000h,000h,000h,000h,000h,000h,000h ;34
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;35
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;36
+                db      033h,000h,000h,000h,000h,000h,000h,000h,000h ;36
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;37
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;38
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;39
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;3A
+                db      053h,0a2h,022h,000h,000h,000h,000h,000h,000h ;38
+                db      000h,000h,000h,000h,033h,000h,000h,000h,000h ;39
+                db      023h,000h,000h,000h,053h,000h,000h,000h,000h ;3A
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;3B
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;3C
+                db      0a2h,072h,032h,081h,000h,000h,000h,000h,000h ;3C
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;3D
-                db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;3E
+                db      082h,000h,000h,000h,000h,000h,000h,000h,000h ;3E
                 db      000h,000h,000h,000h,000h,000h,000h,000h,000h ;3F
+
+instrument      db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 1
+                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0FAh,001h,002h,004h,000h ; 2
+                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0FAh,001h,002h,004h,000h ; 3
+                db      0C2h,0C2h,016h,006h,0A0h,040h,0F3h,0FAh,001h,002h,004h,000h ; 4
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 5
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 6
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 7
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 8
+                db      0C2h,0C2h,016h,000h,0A0h,040h,0F3h,0F3h,001h,002h,004h,000h ; 9
 
 old_int8        dw      2 dup(0)
 current_order   db      0
@@ -120,6 +130,7 @@ main            proc    far
         call    SetAdlib
 
         mov     cx,9
+        mov     si,0
 set_instrument_for_the_9_channels:
         mov     bx,cx
         sub     bx,1
@@ -333,59 +344,71 @@ ToneSet        proc    near
         add     al,020h ; Multi /Key Scale Rate /EG-Type Tone
                         ; Vibrato / AM modulation
         ; AVEKMMMM A=AM V=VIB E=EG-Type K=KSR M=Mulitple
-        mov     ah,11000010b
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
         add     al,3
-        mov     ah,11000010b
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
 
         mov     al,op_table[bx]
         add     al,040h
         ; KKTTTTTT K=KeyScaleLevel T=Total Level of attenuation
-        mov     ah,00010110b    ; Total Level / Key Scale Level
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
         add     al,3
-        mov     ah,00000000b
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
 
         mov     al,op_table[bx]
         add     al,060h
         ; AAAADDDD A=Attack D=Decay
-        mov     ah,10100000b    ; Decay Rate / Attack Rate
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
         add     al,3
-        mov     ah,01000000b
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
 
         mov     al,op_table[bx]
         add     al,080h
         ; SSSSRRRR S=Sustain R=Release
-        mov     ah,11110011b    ; Release Rate / Sustain Level
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
         add     al,3
-        mov     ah,11110011b
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
 
         mov     al,op_table[bx]
         add     al,0E0h
         ; ------WW W=Wave Select
-        mov     ah,00000001b    ; Wave Select
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
         add     al,3
-        mov     ah,00000010b
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
 
         ;Set up channel
         mov     al,0C0h
         add     al,bl
         ; ----FFFC F=Feedback C=Connection (op combination mode)
-        mov     ah,00000100b ; FeedBack factor/ Connect sine/fm
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg
 
         mov     al,0BDh
         ; DDRBSTCH D=Depth (AM/VIB) R=Rythm B=Bass(13,16)
         ; S=Snare(17) T=Tom(15) C=Cymbal(18) H=Hihat(14)
-        mov     ah,00000000b    ; Rythem mode (Chn 7-9)/Vibrato Depth
+        mov     ah,instrument[si]
+        inc     si
         call    setAdLibReg     ; AM Depth
 
         pop     ax

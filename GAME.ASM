@@ -6,11 +6,9 @@ include OBJECT.INC
 dseg   segment para public 'DATA'  ; data segment starts here
 ;
 isRunning       db      0
-tick_walk       db      0
-direction       db      0
 
 player          Object  <>
-enemies         Object  <>
+enemies         Object  200 DUP(<>)
 
 background      DB      0Ch,20h,39h,15h,15h,38h,22h,3Dh,3Dh,3Dh
                 DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh
@@ -114,14 +112,20 @@ setup      proc    far
         mov     player.y,20
         mov     player.radius,400h      ; radius^2
 
-        mov     enemies.x,600
-        mov     enemies.y,100
-        mov     enemies.radius,400h
+        mov     cx,max_enemies
+        xor     si,si
+
+init_enemies:
+        mov word ptr enemies[si].x,600
+        mov word ptr enemies[si].y,100
+        mov word ptr enemies[si].radius,400h
+        add     si,objectsize
+        loop    init_enemies
 
         
 
         MOV     AH, 0      ; 0=SET VIDEO MODE (AL=MODE)
-        MOV     AL, 14     ; MODE 14 (EGA 320x200 16 colors)
+        MOV     AL, 14     ; MODE 14 (EGA 640x200 16 colors)
         INT     10H        ; BIOS INT
 
         pop     ax
@@ -191,23 +195,31 @@ input      endp
 ; update any object position or logic of the game
 update      proc    far
 
-        cmp     ds:tick_walk,0
+        mov     cx,max_enemies
+        xor     si,si
+moveEnemies:
+        cmp byte ptr enemies[si].tick_walk,0
         je      change_direction
-        inc     ds:tick_walk
-        cmp     ds:tick_walk,20
+
+        inc byte ptr enemies[si].tick_walk
+        cmp byte ptr enemies[si].tick_walk,20
         jne     .continue
-        mov     ds:tick_walk,0
+
+        mov byte ptr enemies[si].tick_walk,0
         jmp     .continue
 change_direction:
-        inc     ds:tick_walk
-        call    pseudorandom
-        mov     dx,0
-        mov     cx,4
-        div     cx              ; divide to get a num between 0-3
+        inc byte ptr enemies[si].tick_walk
 
-        mov     ds:direction,dl
+        call    pseudorandom
+
+        and     al,3            ; ax = 0-3
+
+        mov byte ptr enemies[si].direction,al
 .continue:
         call    move_enemy
+
+        add     si,objectsize
+        loop    moveEnemies
 
 
         cmp     player.hit,0
@@ -270,18 +282,23 @@ x_loop:
         mov     al,player.hit
         and     al,1
         cmp     al,0
-        jne     renderEnemies
+        jne     renderEnemy
 renderPlayer:
         mov     si,0
-        mov     cx,player.x
+        mov     dx,player.x
         mov     ax,player.y
         call    draw_sprite
 
+renderEnemy:
+        mov     cx,max_enemies
+        mov     bx,offset enemies
 renderEnemies:
         mov     si,512
-        mov     cx,enemies.x
-        mov     ax,enemies.y
+        mov     dx,[bx].x
+        mov     ax,[bx].y
         call    draw_sprite
+        add     bx,objectsize
+        loop    renderEnemies
 
         lea     si,act1
         call    print_text
@@ -344,33 +361,33 @@ clean      endp
 ;--------------------------------------------------------------------
 ; clean the computer memory
 move_enemy      proc    near
-        cmp     ds:direction,0
+        cmp byte ptr enemies[si].direction,0
         je      moveNorth
-        cmp     ds:direction,1
+        cmp byte ptr enemies[si].direction,1
         je      moveEast
-        cmp     ds:direction,2
+        cmp byte ptr enemies[si].direction,2
         je      moveSouth
-        cmp     ds:direction,3
+        cmp byte ptr enemies[si].direction,3
         je      moveWest
 moveNorth:
-        cmp     enemies.y,0
+        cmp word ptr enemies[si].y,0
         jle     .end
-        dec     enemies.y
+        dec word ptr enemies[si].y
         jmp     .end
 moveEast:
-        cmp     enemies.x,608
+        cmp word ptr enemies[si].x,608
         jge     .end
-        inc     enemies.x
+        inc word ptr enemies[si].x
         jmp     .end
 moveSouth:
-        cmp     enemies.y,184
+        cmp word ptr enemies[si].y,184
         jge     .end
-        inc     enemies.y
+        inc word ptr enemies[si].y
         jmp     .end
 moveWest:
-        cmp     enemies.x,0
+        cmp word ptr enemies[si].x,0
         jle     .end
-        dec     enemies.x
+        dec word ptr enemies[si].x
 .end:
         ret
 move_enemy      endp

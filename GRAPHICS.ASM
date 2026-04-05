@@ -1811,7 +1811,7 @@ codes   segment
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
 ;FUNCTION: This routine send word to the buffer memory 4 planes
-;INPUT:  CX and AX are given the x and y respectively. SI is given
+;INPUT:  DX and AX are given the x and y respectively. SI is given
 ; the sprite index to draw
 ;OUTPUT: There is no output.
 ;REGISTERS USED: No registers are modified. DS and ES are used to
@@ -1832,6 +1832,7 @@ draw_sprite      proc    far
         push    cx
         push    bx
 
+        mov     cx,dx
         ; position = (y*80) + (x/8)
         mov     bx, 80
         mul     bx

@@ -16,7 +16,7 @@ def closest_ega_color(color):
 
 def convert_to_interleaved_words(file_path):
     image = Image.open(file_path)
-    image = image.resize((32, 16))
+    image = image.resize((16, 16))
     image = image.convert("RGB")
 
     width_bytes = image.width // 8  # 40 bytes par ligne
@@ -73,6 +73,42 @@ def format_words_to_asm(words, words_per_line=8):
 
     return "\n".join(lines)
 
+def generate_mask_words(file_path, transparent_index):
+    image = Image.open(file_path)
+    image = image.resize((16, 16))
+    image = image.convert("RGB")
+
+    width_bytes = image.width // 8
+    height = image.height
+
+    mask_bytes = [[0]*width_bytes for _ in range(height)]
+
+    for y in range(height):
+        for x in range(0, image.width, 8):
+            byte = 0
+
+            for bit in range(8):
+                pixel = image.getpixel((x+bit, y))
+                ega = closest_ega_color(pixel)
+
+                # 1 = visible, 0 = transparent
+                if ega != transparent_index:
+                    byte |= (1 << (7-bit))
+
+            mask_bytes[y][x // 8] = byte
+
+    # Convertir en WORD comme ton sprite
+    words = []
+
+    for y in range(height):
+        for byte_index in range(0, width_bytes, 2):
+            b1 = mask_bytes[y][byte_index]
+            b2 = mask_bytes[y][byte_index+1] if byte_index+1 < width_bytes else 0
+            word = (b2 << 8) | b1
+            words.append(word)
+
+    return words
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python script.py input.bmp [output.asm]")
@@ -81,11 +117,20 @@ def main():
     input_file = sys.argv[1]
     output_file = sys.argv[2] if len(sys.argv) > 2 else "output.asm"
 
+    # Sprite
     words = convert_to_interleaved_words(input_file)
-    asm = format_words_to_asm(words)
+
+    # Mask (brun = index 6)
+    mask_words = generate_mask_words(input_file, transparent_index=6)
+
+    asm_sprite = format_words_to_asm(words)
+    asm_mask = format_words_to_asm(mask_words)
 
     with open(output_file, "w") as f:
-        f.write(asm)
+        f.write("; SPRITE\n")
+        f.write(asm_sprite)
+        f.write("\n\n; MASK\n")
+        f.write(asm_mask)
 
     print(f"ASM généré: {output_file}")
 

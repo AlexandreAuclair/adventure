@@ -3,6 +3,7 @@
 ;---------------------------------data area begins------------------+
 dseg   segment para public 'DATA'  ; data segment starts here
 ;
+flag    db      0
 ;
 dseg   ends                            ; data segment ends here
 ;----------------------------------data area ends-------------------+
@@ -11,7 +12,7 @@ dseg   ends                            ; data segment ends here
 codes   segment 
 ;
 ;+++++++++++++++++++++++ public declarations start ++++++++++++++++++
-        public  dist, checkdist16
+        public  dist, checkdist16,flag
 ;+++++++++++++++++++++++ public declarations end ++++++++++++++++++++
 ;
 ;++++++++++++++++++++++++++++++++ externals begin +++++++++++++++++++
@@ -20,7 +21,7 @@ codes   segment
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
 ;FUNCTION: None
-;INPUT: DI & DX are x1 & y1 and SI & CX are x2 & y2
+;INPUT: DI & DX are x1 & y1 and AX & BX are x2 & y2
 ;OUTPUT: the distance squared is return in AX
 ;REGISTERS USED: None
 ;SEGMENTS REFERENCED: None
@@ -29,22 +30,28 @@ codes   segment
 ;--------------------------------------------------------------------
 ; calculate the distance between 2 points
 dist        proc    far
-        push    bx
+        push    cx
+        push    si
+        push    dx
+        push    di
 
-        sub     cx,dx       ; y2 - y1
-        shl     cx,1
-        mov     ax,cx       
-        imul    cx          ; dy^2
+        sub     bx,dx       ; y2 - y1
+        mov     si,ax     
+        mov     ax,bx  
+        imul    bx          ; dy^2
 
-        mov     bx,ax
+        mov     cx,ax
 
         sub     si,di       ; x2 - x1
         mov     ax,si       
         imul    si          ; dx^2
 
-        add     ax,bx       ; dx + dy
+        add     ax,cx       ; dx^2 + dy^2
 
-        pop     bx
+        pop     di
+        pop     dx
+        pop     si
+        pop     cx
         
         ret
 
@@ -53,7 +60,7 @@ dist        endp
 ;
 ;----------------------- routines begins ---------------------------+
 ;FUNCTION: None
-;INPUT: DI & DX are x1 & y1 and SI & CX are x2 & y2
+;INPUT: DI & DX are x1 & y1 and AX & BX are x2 & y2
 ;OUTPUT: return boolean in ax
 ;REGISTERS USED: None
 ;SEGMENTS REFERENCED: None
@@ -65,28 +72,30 @@ checkdist16     proc    far
 
         push    di
         push    dx
-        push    si
-        push    cx
+        push    ax
+        push    bx
 
-        sub     si,di
+        mov     ds:flag,0
+
+        sub     ax,di
         jns     .ok
-        neg     si
+        neg     ax
 .ok:
-        cmp     si,50
+        cmp     ax,16
         jb      checkY
-        mov     ah,1
+        mov     ds:flag,1
         jmp     .end
 checkY:
-        sub     cx,dx
+        sub     bx,dx
         jns     .ok2
-        neg     cx
+        neg     bx
 .ok2:
-        cmp     cx,50
+        cmp     bx,16
         jb      .end
-        mov     al,1
+        mov     ds:flag,1
 .end:
-        pop     cx
-        pop     si
+        pop     bx
+        pop     ax
         pop     dx
         pop     di
         

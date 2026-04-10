@@ -1,0 +1,12 @@
+    db 38h,39h,38h,39h,38h,39h,38h,87h,38h,39h,38h,39h,38h,39h,38h,39h,38h,39h,38h,39h
+    db 44h,45h,44h,45h,44h,45h,44h,6Fh,44h,45h,44h,45h,44h,45h,44h,87h,44h,45h,44h,45h
+    db 15h,15h,15h,15h,15h,15h,15h,6Fh,15h,85h,85h,85h,15h,15h,15h,6Fh,15h,15h,15h,15h
+    db 21h,21h,21h,21h,87h,21h,21h,6Fh,21h,85h,2Fh,85h,21h,21h,21h,6Fh,21h,21h,21h,21h
+    db 79h,79h,79h,79h,6Fh,79h,79h,6Fh,79h,84h,ABh,86h,79h,79h,79h,6Fh,79h,79h,79h,79h
+    db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Fh,6Ah,6Fh,ABh,6Fh,A5h,A5h,6Ah,6Fh,75h,75h,75h,75h
+    db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Fh,6Ah,6Fh,ABh,6Fh,A5h,A5h,6Ah,6Fh,75h,75h,75h,75h
+    db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,7Bh,6Ah,6Fh,ABh,6Fh,A5h,A5h,6Ah,6Fh,75h,75h,75h,75h
+    db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Ah,6Ah,6Fh,ABh,6Fh,A5h,A5h,6Ah,6Fh,75h,75h,75h,75h
+    db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Ah,6Ah,6Fh,ABh,6Fh,A5h,A5h,6Ah,6Fh,75h,75h,75h,75h
+    db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Ah,6Ah,6Fh,ABh,6Fh,6Ah,6Ah,6Ah,7Bh,75h,75h,75h,75h
+    db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Ah,6Ah,90h,ABh,92h,6Ah,6Ah,6Ah,6Ah,75h,75h,75h,75h

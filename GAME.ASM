@@ -6,69 +6,38 @@ include OBJECT.INC
 dseg   segment para public 'DATA'  ; data segment starts here
 ;
 isRunning       db      0
+current_screen  db      0
 
 player          Object  <>
 enemies         Object  200 DUP(<>)
+Boss            Object  <>
 
-background      DB      0Ch,20h,39h,15h,15h,38h,22h,3Dh,3Dh,3Dh
-                DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh
-                DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh
-                DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,0Eh
+background      db 73h,0Dh,3Dh,0Dh,3Dh,0Dh,59h,10h,11h,11h,11h,12h,59h,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,73h
+                db 73h,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,1Ch,4Fh,11h,4Eh,1Eh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,73h
+                db 73h,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,59h,10h,11h,12h,59h,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,73h
+                db 73h,3Dh,08h,09h,0Ah,3Dh,0Dh,3Dh,10h,11h,12h,3Dh,0Dh,3Dh,0Dh,08h,09h,0Ah,0Dh,73h
+                db 73h,0Dh,14h,15h,16h,0Dh,3Dh,59h,10h,11h,12h,59h,3Dh,0Dh,3Dh,14h,15h,16h,3Dh,73h
+                db 73h,3Dh,20h,21h,22h,3Dh,0Dh,3Dh,10h,11h,12h,3Dh,0Dh,3Dh,0Dh,20h,21h,22h,0Dh,73h
+                db 73h,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,59h,10h,11h,12h,59h,3Dh,0Dh,3Dh,3Dh,3Dh,0Dh,3Dh,73h
+                db 73h,3Dh,59h,3Dh,59h,3Dh,59h,3Dh,10h,11h,12h,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,73h
+                db 73h,59h,04h,05h,05h,05h,29h,29h,1Dh,1Dh,1Eh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,73h
+                db 73h,04h,11h,11h,11h,12h,0Dh,59h,3Dh,59h,3Dh,59h,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,73h
+                db 7Fh,1Ch,1Dh,1Dh,1Dh,1Eh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,7Fh
+                db 7Bh,3Dh,59h,3Dh,59h,3Dh,59h,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,3Dh,0Dh,7Bh
 
-                DB      0Ch,3Dh,20h,39h,38h,22h,0Dh,0Dh,3Dh,0Dh
-                DB      0Dh,0Dh,0Dh,0Dh,3Dh,3Dh,0Dh,0Dh,3Dh,0Dh
-                DB      0Dh,0Dh,3Dh,0Dh,59h,0Dh,0Dh,0Dh,0Dh,0Dh
-                DB      0Dh,3Dh,0Dh,0Dh,0Dh,3Dh,0Dh,59h,0Dh,0Eh
-                
-                DB      0Ch,0Dh,3Dh,14h,16h,0Dh,0Dh,59h,3Dh,3Dh
-                DB      0Dh,59h,59h,0Dh,04h,05h,05h,05h,05h,05h
-                DB      05h,05h,05h,06h,0Dh,0Dh,3Dh,0Dh,0Dh,3Dh
-                DB      3Dh,3Dh,3Dh,3Dh,3Dh,3Dh,0Dh,0Dh,0Dh,0Eh
+                db 38h,39h,38h,39h,38h,39h,38h,87h,38h,39h,38h,39h,38h,39h,38h,39h,38h,39h,38h,39h
+                db 44h,45h,44h,45h,44h,45h,44h,6Fh,44h,45h,44h,45h,44h,45h,44h,87h,44h,45h,44h,45h
+                db 15h,15h,15h,15h,15h,15h,15h,6Fh,15h,85h,85h,85h,15h,15h,15h,6Fh,15h,15h,15h,15h
+                db 21h,21h,21h,21h,87h,21h,21h,6Fh,21h,85h,2Fh,85h,21h,21h,21h,6Fh,21h,21h,21h,21h
+                db 79h,79h,79h,79h,6Fh,79h,79h,6Fh,79h,84h,0ABh,86h,79h,79h,79h,6Fh,79h,79h,79h,79h
+                db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Fh,6Ah,6Fh,0ABh,6Fh,0A5h,0A5h,6Ah,6Fh,75h,75h,75h,75h
+                db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Fh,6Ah,6Fh,0ABh,6Fh,0A5h,0A5h,6Ah,6Fh,75h,75h,75h,75h
+                db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,7Bh,6Ah,6Fh,0ABh,6Fh,0A5h,0A5h,6Ah,6Fh,75h,75h,75h,75h
+                db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Ah,6Ah,6Fh,0ABh,6Fh,0A5h,0A5h,6Ah,6Fh,75h,75h,75h,75h
+                db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Ah,6Ah,6Fh,0ABh,6Fh,0A5h,0A5h,6Ah,6Fh,75h,75h,75h,75h
+                db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Ah,6Ah,6Fh,0ABh,6Fh,6Ah,6Ah,6Ah,7Bh,75h,75h,75h,75h
+                db 6Ah,6Ah,6Ah,6Ah,6Fh,6Ah,6Ah,6Ah,6Ah,90h,0ABh,92h,6Ah,6Ah,6Ah,6Ah,75h,75h,75h,75h
 
-                DB      0Ch,0Dh,3Dh,14h,16h,3Dh,3Dh,3Dh,3Dh,3Dh
-                DB      3Dh,3Dh,0Dh,0Dh,10h,11h,11h,71h,11h,40h
-                DB      71h,40h,11h,5Ah,05h,06h,3Dh,3Dh,3Dh,3Dh
-                DB      0Dh,0Dh,3Dh,3Dh,3Dh,0Dh,0Dh,0Dh,0Dh,0Eh
-
-                DB      0Ch,0Dh,3Dh,14h,16h,3Dh,0Dh,0Dh,04h,05h
-                DB      05h,05h,05h,05h,5Bh,11h,11h,11h,71h,11h
-                DB      40h,40h,11h,11h,11h,5Ah,05h,06h,3Dh,3Dh
-                DB      3Dh,3Dh,3Dh,3Dh,2Fh,3Dh,3Dh,0Dh,0Dh,0Eh
-
-                DB      0Ch,3Dh,3Dh,14h,16h,3Dh,3Dh,04h,5Bh,11h
-                DB      11h,11h,11h,11h,11h,11h,11h,11h,11h,40h
-                DB      11h,11h,40h,11h,11h,11h,11h,5Bh,05h,05h
-                DB      06h,3Dh,3Dh,3Dh,0Dh,0Dh,0Dh,0Dh,3Dh,0Eh
-
-                DB      29h,29h,29h,0ABh,0ABh,29h,29h,0AAh,11h,11h
-                DB      11h,11h,40h,71h,11h,11h,11h,11h,11h,27h
-                DB      40h,11h,11h,40h,71h,40h,71h,40h,11h,11h
-                DB      5Ah,06h,0Dh,3Dh,3Dh,3Dh,3Dh,3Dh,0Dh,0Eh
-
-                DB      0Ch,0Dh,0Dh,14h,16h,0Dh,3Dh,1Ch,1Dh,4Fh
-                DB      11h,40h,71h,40h,11h,11h,11h,40h,71h,40h
-                DB      71h,11h,11h,11h,11h,11h,11h,11h,11h,11h
-                DB      11h,12h,0Dh,3Dh,3Dh,3Dh,3Dh,3Dh,0Dh,0Eh
-
-                DB      0Ch,0Dh,3Dh,14h,16h,0Dh,3Dh,3Dh,3Dh,1Ch
-                DB      4Fh,11h,11h,40h,40h,11h,11h,71h,40h,71h
-                DB      11h,11h,4Eh,1Dh,1Dh,1Dh,1Dh,4Fh,11h,11h
-                DB      4Eh,1Eh,3Dh,0Dh,0Dh,3Dh,3Dh,3Dh,0Dh,0Eh
-
-                DB      0Ch,0Dh,3Dh,14h,16h,0Dh,0Dh,0Dh,0Dh,3Dh
-                DB      1Ch,1Dh,1Dh,1Dh,1Dh,1Dh,1Dh,1Dh,1Dh,1Dh
-                DB      1Dh,1Dh,1Eh,3Dh,3Dh,3Dh,0Dh,1Ch,1Dh,1Dh
-                DB      1Eh,0Dh,0Dh,0Dh,0Dh,3Dh,3Dh,3Dh,3Dh,0Eh
-
-                DB      0Ch,0Dh,0Dh,14h,16h,0Dh,0Dh,59h,0Dh,0Dh
-                DB      0Dh,59h,59h,0Dh,0Dh,3Dh,3Dh,0Dh,0Dh,59h
-                DB      0Dh,0Dh,59h,0Dh,0Dh,3Dh,0Dh,0Dh,0Dh,0Dh
-                DB      0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Dh,0Eh
-
-                DB      18h,19h,19h,14h,16h,19h,19h,19h,19h,19h
-                DB      19h,19h,19h,19h,19h,19h,19h,19h,19h,19h
-                DB      19h,19h,19h,19h,19h,19h,19h,19h,19h,19h
-                DB      19h,19h,19h,19h,19h,19h,19h,19h,19h,1Ah
 
 act1            db      "Epstein's Island",10,"The new adventure begin!",0
 ;
@@ -86,7 +55,7 @@ codes   segment
         extrn  set_keyboard:far,unset_keyboard:far,Keys:BYTE
         extrn  draw_sprite:far,draw_background:far
         extrn  sendBufferToVRAM:far,dec16out:far,pseudorandom:far
-        extrn  dist:far,checkdist16:far,print_text:far
+        extrn  dist:far,checkdist16:far,print_text:far,flag:byte
 ;+++++++++++++++++++++++++++++++++ externals end ++++++++++++++++++++
         assume  cs:codes, ds:dseg
 ;----------------------- routines begins ---------------------------+
@@ -108,24 +77,28 @@ setup      proc    far
         mov     ds:isRunning,1
         call    set_keyboard
 
-        mov     player.x,60
-        mov     player.y,20
-        mov     player.radius,400h      ; radius^2
+        mov     player.x,280
+        mov     player.y,80
+        mov     player.radius,100h      ; radius^2
 
         mov     cx,max_enemies
         xor     si,si
 
 init_enemies:
-        mov word ptr enemies[si].x,600
+        mov word ptr enemies[si].x,280
         mov word ptr enemies[si].y,100
-        mov word ptr enemies[si].radius,400h
+        mov word ptr enemies[si].radius,100h
         add     si,objectsize
         loop    init_enemies
+
+init_boss:
+        mov     boss.x,152
+        mov     boss.y,92
 
         
 
         MOV     AH, 0      ; 0=SET VIDEO MODE (AL=MODE)
-        MOV     AL, 14     ; MODE 14 (EGA 640x200 16 colors)
+        MOV     AL, 13     ; MODE 14 (EGA 320x200 16 colors)
         INT     10H        ; BIOS INT
 
         pop     ax
@@ -151,22 +124,22 @@ input      proc    far
         mov     si,KEY_KEYPAD_8
         cmp     ds:Keys[si],0
         je      no_up
-        sub     player.y,4
+        sub     player.y,2
 no_up:
         mov     si,KEY_KEYPAD_2
         cmp     ds:Keys[si],0
         je      no_down
-        add     player.y,4
+        add     player.y,2
 no_down:
         mov     si,KEY_KEYPAD_4
         cmp     ds:Keys[si],0
         je      no_left
-        sub     player.x,8
+        sub     player.x,4
 no_left:
         mov     si,KEY_KEYPAD_6
         cmp     ds:Keys[si],0
         je      no_right
-        add     player.x,8
+        add     player.x,4
 no_right:
 
 
@@ -225,27 +198,65 @@ change_direction:
         cmp     player.hit,0
         je      checkForCol
         dec     player.hit
-        jmp     noCollision
+        jmp     checkForScreenLimitCol
 checkForCol:  
         mov     di,player.x     ; take the x point
-        add     di,16           ; put it at the middle
+        add     di,8            ; put it at the middle
         mov     dx,player.y     ; take the y point
         add     dx,8            ; put it at the middle
-        mov     si,enemies.x
-        add     si,16
-        mov     cx,enemies.y
-        add     cx,8
-        mov     ax,0
+
+        xor     si,si
+        mov     cx,max_enemies
+everyCol:
+        mov     ax,word ptr enemies[si].x
+        add     ax,8
+        mov     bx,word ptr enemies[si].y
+        add     bx,8
+        mov     ds:flag,0
         call    checkdist16
-        cmp     ax,0
-        jne     noCollision
+        cmp     ds:flag,1
+        je      noCollision
         call    dist            ; now AX has dist^2
-        cmp     ax,enemies.radius
+        cmp     ax,word ptr enemies[si].radius
         ja      noCollision
         mov     player.hit,25
+        jmp     checkForScreenLimitCol  ; we can skip the loop if we collided
 noCollision:
+        add     si,objectsize
+        loop    everyCol
         
-        
+checkForScreenLimitCol:
+        cmp     player.y,0
+        jl      goNorth
+        cmp     player.x,0
+        jl      goEast
+        cmp     player.y,176
+        jg      goSouth
+        cmp     player.x,304
+        jg      goWest
+        jmp     .done
+goNorth:
+        cmp     ds:current_screen,0
+        jne     cannotGoNorth
+        inc     ds:current_screen
+        mov     player.y,174
+        jmp     .done
+cannotGoNorth:
+        add     player.y,2
+        jmp     .done
+goEast:
+goSouth:
+        cmp     ds:current_screen,1
+        jne     cannotGoSouth
+        dec     ds:current_screen
+        mov     player.y,2
+        jmp     .done
+cannotGoSouth:
+        sub     player.y,2
+        jmp     .done
+goWest:
+.done:
+
         
         RET
 update      endp
@@ -262,7 +273,11 @@ update      endp
 ;--------------------------------------------------------------------
 ; render all the game object and background
 render      proc    far
-        mov     si, 0           ; index map
+        xor     ax,ax
+        mov     al,ds:current_screen
+        mov     bx,240
+        mul     bx
+        mov     si, ax          ; index map
         mov     bx, 0           ; y
         mov     ax, 0
 y_loop:
@@ -273,7 +288,7 @@ x_loop:
         call    draw_background
         inc     si
         add     cx,16
-        cmp     cx,640
+        cmp     cx,320
         jl      x_loop
         add     bx,16
         cmp     bx,184
@@ -293,15 +308,14 @@ renderEnemy:
         mov     cx,max_enemies
         mov     bx,offset enemies
 renderEnemies:
-        mov     si,512
+        mov     si,128
         mov     dx,[bx].x
         mov     ax,[bx].y
         call    draw_sprite
         add     bx,objectsize
         loop    renderEnemies
 
-        lea     si,act1
-        call    print_text
+        
 
         call    sendBufferToVRAM
         RET

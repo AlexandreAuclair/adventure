@@ -3,56 +3,41 @@
 ;---------------------------------data area begins------------------+
 dseg   segment para public 'DATA'                  ; data segment starts here
 ;
-sprite  DW 0000h, 0F0FFh, 0F5FFh, 0500h, 0000h, 0FF0Fh, 0FFEFh, 00E0h
-        DW 0000h, 80FFh, 0ABFFh, 2B00h, 0000h, 0FF01h, 0FFFDh, 00FCh
-        DW 0000h, 00FFh, 55FFh, 5500h, 0000h, 0FF00h, 0FFFEh, 00FEh
-        DW 0000h, 00FFh, 55FFh, 5500h, 0000h, 0FF00h, 0FF7Eh, 007Eh
-        DW 0200h, 07FFh, 57FFh, 5700h, 0000h, 0FF00h, 0FF5Eh, 005Eh
-        DW 0800h, 19FFh, 59FFh, 5900h, 0080h, 0FF90h, 0FF96h, 0096h
-        DW 4800h, 19FCh, 19FDh, 5901h, 808Ah, 3F9Ah, 0BF9Ah, 809Ah
-        DW 6200h, 27F0h, 07F5h, 6705h, 40A6h, 1FE6h, 0DFE6h, 0C0E6h
-        DW 3801h, 18E0h, 02EBh, 3A0Bh, 601Ch, 0F1Ch, 0EFDDh, 0E0DDh
-        DW 0F01h, 07E0h, 20EBh, 2F0Bh, 40F0h, 0EFF0h, 0EFF4h, 0E0F4h
-        DW 0301h, 81F3h, 90F7h, 9307h, 00C0h, 5FC3h, 5FDBh, 40D8h
-        DW 2401h, 24FBh, 01FBh, 2503h, 0024h, 0FF25h, 0FF25h, 0024h
-        DW 4300h, 43FFh, 08FFh, 4B00h, 00C2h, 0FFC2h, 0FFDAh, 00DAh
-        DW 3D00h, 8DFFh, 80FFh, 3D00h, 0080h, 0FF81h, 0FFB9h, 00B8h
-        DW 3C00h, 04E8h, 00E8h, 3C00h, 0078h, 5F18h, 5F00h, 0078h
-        DW 0000h, 00FAh, 00FAh, 0000h, 0078h, 0FF0Ah, 0FF02h, 0078h
+sprite  DW 0000h, 0FFFFh, 0FFFFh, 0000h, 4000h, 0FFF0h, 0FFF0h, 8000h
+        DW 400Bh, 0DFEFh, 0DFEFh, 8025h, 0C01Ah, 0DFDFh, 0DFDFh, 0D007h
+        DW 0040h, 0FFDFh, 0FFFFh, 0F03Fh, 0C033h, 0FFFFh, 0FFFFh, 704Fh
+        DW 0A05Fh, 0FFDFh, 0FFDFh, 7020h, 0A00Ch, 0BFECh, 0FFFDh, 8030h
+        DW 0E00Bh, 0FFEBh, 0FFFFh, 0D037h, 101Fh, 0DFFFh, 0DFFFh, 0C801h
+        DW 402Fh, 57FFh, 57FFh, 105Dh, 260Bh, 0A7CBh, 0EFCBh, 0CE08h
+        DW 0600h, 1FA2h, 5FE6h, 0D676h, 00C2h, 8FC0h, 0DFF9h, 90F0h
+        DW 00C0h, 9FF0h, 9FF9h, 90D4h, 0000h, 0FFFFh, 0FFFFh, 0C004h
 
-        DW 0000h, 0F0FFh, 0F5FFh, 0500h, 0000h, 0FF0Fh, 0FFEFh, 00E0h
-        DW 0000h, 80FFh, 0ABFFh, 2B00h, 0000h, 0FF01h, 0FFFDh, 00FCh
-        DW 0000h, 00FFh, 55FFh, 5500h, 0000h, 0FF00h, 0FFFEh, 00FEh
-        DW 0000h, 00FFh, 55FFh, 5500h, 0000h, 0FF00h, 0FF7Eh, 007Eh
-        DW 0200h, 07FFh, 57FFh, 5700h, 0000h, 0FF00h, 0FF5Eh, 005Eh
-        DW 0800h, 19FFh, 59FFh, 5900h, 0080h, 0FF90h, 0FF96h, 0096h
-        DW 4800h, 19FCh, 19FDh, 5901h, 808Ah, 3F9Ah, 0BF9Ah, 809Ah
-        DW 6200h, 27F8h, 07FBh, 6703h, 40A6h, 1FE6h, 0DFE6h, 0C0E6h
-        DW 3800h, 18F0h, 02F5h, 3A05h, 401Ch, 1F1Ch, 0DFDDh, 0C0DDh
-        DW 0F02h, 07F7h, 20F7h, 2F07h, 20F0h, 0FF0h, 0EFF4h, 0E0F4h
-        DW 0302h, 0C1F6h, 0D0F6h, 1306h, 0A0C0h, 0CFC1h, 0EFD9h, 0E0D9h
-        DW 2400h, 0A4FFh, 81FFh, 2500h, 4024h, 0DF24h, 0DF24h, 0C024h
-        DW 4300h, 43FFh, 10FFh, 5300h, 00C2h, 0FFC2h, 0FFDAh, 00DAh
-        DW 0100h, 0C1FFh, 0D8FFh, 1900h, 00BCh, 0FF8Dh, 0FF81h, 00BCh
-        DW 1E00h, 06E8h, 00E8h, 1E00h, 003Ch, 5F04h, 5F00h, 003Ch
-        DW 1E00h, 02FAh, 00FAh, 1E00h, 0000h, 0FF02h, 0FF02h, 0000h
+zombie  DW 0000h, 0FFFFh, 0FFFFh, 0000h, 0000h, 0FFFFh, 0FFFFh, 0000h
+        DW 0000h, 0FFCh, 0FFCh, 0000h, 0000h, 0F7FBh, 07F8h, 0F000h
+        DW 0000h, 0F7F3h, 07F0h, 0F000h, 0000h, 27FBh, 07F8h, 0000h
+        DW 0D000h, 0F7FBh, 0D7F8h, 0F000h, 0000h, 0F7FBh, 07F8h, 7000h
+        DW 0000h, 0FFCh, 0FFCh, 0000h, 0A003h, 4FF8h, 0AFFBh, 0E000h
+        DW 0E003h, 0FF8h, 0EFFBh, 0E001h, 0E001h, 07FAh, 0E7F9h, 8003h
+        DW 0000h, 17FAh, 07F8h, 1002h, 0000h, 4FFCh, 4FFCh, 0000h
+        DW 0000h, 0DFFEh, 0DFFEh, 0000h, 0000h, 0FFFFh, 0FFFFh, 0000h
 
-shrek   DW 0000h, 1300h, 0000h, 1300h, 0000h, 30E4h, 0000h, 30E4h
-        DW 0000h, 0E3Ch, 0004h, 0C38h, 0000h, 3CD8h, 0000h, 3CD8h
-        DW 8000h, 0FE7Eh, 9810h, 606Eh, 0002h, 0FEDFh, 080Ah, 0F6D5h
-        DW 0000h, 0FDFFh, 1800h, 0E0FFh, 0000h, 0FFFFh, 8408h, 7BE7h
-        DW 0000h, 0FEFFh, 3860h, 0C09Fh, 0000h, 0BC7Fh, 001Ch, 0FC63h
-        DW 0000h, 0FF39h, 3E08h, 0C037h, 0400h, 0FCFFh, 047Ch, 0F803h
-        DW 0000h, 7F1Fh, 7F00h, 001Fh, 0000h, 70FCh, 00FCh, 7000h
-        DW 0000h, 7F00h, 3E00h, 4100h, 0000h, 00FCh, 003Ch, 00C0h
-        DW 0000h, 7F00h, 0000h, 7F00h, 0000h, 00FCh, 0000h, 00FCh
-        DW 0000h, 4F00h, 0000h, 7F00h, 0000h, 00F4h, 0000h, 00FCh
-        DW 0000h, 0FF00h, 0700h, 0F800h, 0000h, 00FEh, 00F2h, 000Ch
-        DW 0000h, 0FF00h, 0FF00h, 0000h, 0020h, 00FFh, 00FFh, 0000h
-        DW 0000h, 0F000h, 0F000h, 0000h, 0000h, 001Eh, 001Eh, 0000h
-        DW 0000h, 0000h, 0000h, 0C001h, 0000h, 000Eh, 000Eh, 0000h
-        DW 0000h, 0000h, 0000h, 8007h, 0000h, 0000h, 0000h, 801Fh
-        DW 0000h, 0000h, 0000h, 0000h, 0000h, 0000h, 0000h, 0C001h
+adol    DW 0000h, 3FFCh, 0BFFFh, 8003h, 0000h, 1FF0h, 0FFF1h, 0E001h
+        DW 0000h, 0FF0h, 0EFFFh, 0E00Fh, 0000h, 0FF0h, 0EFFFh, 0E00Fh
+        DW 0000h, 0FF3h, 0EFFFh, 0E00Fh, 0000h, 4FF5h, 6FFDh, 600Dh
+        DW 0008h, 47E5h, 47F5h, 401Dh, 2808h, 0A7C3h, 0AFF3h, 0A83Bh
+        DW 6814h, 6384h, 0FB90h, 0F814h, 0C813h, 0CB83h, 0EB90h, 0E813h
+        DW 8011h, 9FD1h, 0DFF4h, 0C835h, 2012h, 3FD2h, 3FD1h, 2013h
+        DW 8009h, 8FF9h, 0CFF0h, 0C009h, 0007h, 1FF3h, 5FF0h, 4007h
+        DW 0C006h, 4F82h, 0F80h, 0C006h, 0C000h, 0FC0h, 0FC0h, 0C000h
+
+Masks   DW 0000h, 0C00Fh, 0E03Fh, 0F03Fh, 0F07Fh, 0F07Fh, 0F07Fh, 0E03Fh
+        DW 0F03Fh, 0F81Fh, 0F87Fh, 0FE3Fh, 0F67Fh, 0F0FFh, 0F0DFh, 0C004h
+	
+	DW 0000h, 0000h, 0F003h, 0F807h, 0F80Fh, 0F807h, 0F807h, 0F807h
+	DW 0F003h, 0F007h, 0F007h, 0F807h, 0F803h, 0B003h, 02001h, 0000h
+
+        DW 0C003h, 0E00Fh, 0F00Fh, 0F00Fh, 0F00Fh, 0F00Fh, 0F81Fh, 0F83Fh
+        DW 0FC7Fh, 0FC7Fh, 0E83Fh, 0E03Fh, 0F00Fh, 0E00Fh, 0F07Fh, 0F03Fh
 
 tileset DW 0000h, 31FCh, 31FCh, 0CE03h, 0000h, 0CEE3h, 00E0h, 351Dh ;sprite 0
         DW 0000h, 0CECBh, 00C0h, 0FF37h, 0000h, 0FFAFh, 0080h, 0FF5Fh
@@ -1788,10 +1773,10 @@ dseg   ends                            ; data segment ends here
 
 
 bseg   segment para public 'DATA2'                  ; data segment starts here
-plane0  dw      8000 dup(0)
-plane1  dw      8000 dup(0)
-plane2  dw      8000 dup(0)
-plane3  dw      8000 dup(0)
+plane0  dw      4000 dup(0)
+plane1  dw      4000 dup(0)
+plane2  dw      4000 dup(0)
+plane3  dw      4000 dup(0)
 bseg   ends
 ;----------------------------------data area ends-------------------+
 ;
@@ -1812,7 +1797,7 @@ codes   segment
 ;----------------------- routines begins ---------------------------+
 ;FUNCTION: This routine send word to the buffer memory 4 planes
 ;INPUT:  DX and AX are given the x and y respectively. SI is given
-; the sprite index to draw
+; the sprite index to draw. 
 ;OUTPUT: There is no output.
 ;REGISTERS USED: No registers are modified. DS and ES are used to
 ; hold the data segment. SI is used for index sprite. DI is used for
@@ -1834,7 +1819,7 @@ draw_sprite      proc    far
 
         mov     cx,dx
         ; position = (y*80) + (x/8)
-        mov     bx, 80
+        mov     bx, 40
         mul     bx
 
         shr     cx, 1
@@ -1842,8 +1827,8 @@ draw_sprite      proc    far
         shr     cx, 1           ; x/8
         add     ax,cx
         mov     di,ax           ; Video memory offset
-        mov     bx,ax
-        add     bx,500h
+        mov     cx,ax
+        add     cx,280h         ; end of addr because 16 lines
 
         mov     ax,bseg
         mov     es,ax
@@ -1853,36 +1838,77 @@ draw_sprite      proc    far
         ;cmp     al,0
         ;je      draw_sprite_y
         ;add     si,256
+	cmp	si,0
+	je	spr1
+	cmp	si,128
+	je	spr2
+        cmp     si,256
+        je      spr3
+	jmp	draw_sprite1
+spr1:
+	mov	bx,0
+	jmp	draw_sprite1
+spr2:
+	mov	bx,32
+        jmp     draw_sprite1
+spr3:
+        mov     bx,64
 
-draw_sprite_y:
-        mov     cx,2
-draw_sprite_x:
+
+draw_sprite1:
         ; Set Write Plane Mask to Plane 0
+	mov	dx,es:plane0[di]
+	mov	ax,ds:masks[bx]
+	xor	ax,0FFFFh
+	and	dx,ax		; mask the sprite in the background
+	
         mov     ax,ds:sprite[si]
+	and	ax,ds:masks[bx]	; mask the sprite for transparency
+	or	ax,dx		; add the sprite and background togheter
         mov     es:plane0[di],ax
 
 
         ; Set Write Plane Mask to Plane 1 
+	mov	dx,es:plane1[di]
+	mov	ax,ds:masks[bx]
+	xor	ax,0FFFFh
+	and	dx,ax		; mask the sprite in the background
+
         add     si,2
         mov     ax,ds:sprite[si]
+	and	ax,ds:masks[bx]	; mask the sprite for transparency
+	or	ax,dx		; add the sprite and background togheter
         mov     es:plane1[di],ax
 
         ; Set Write Plane Mask to Plane 2
+	mov	dx,es:plane2[di]
+	mov	ax,ds:masks[bx]
+	xor	ax,0FFFFh
+	and	dx,ax		; mask the sprite in the background
+
         add     si,2
         mov     ax,ds:sprite[si]
+	and	ax,ds:masks[bx]	; mask the sprite for transparency
+	or	ax,dx		; add the sprite and background togheter
         mov     es:plane2[di],ax
 
         ; Set Write Plane Mask to Plane 3
+	mov	dx,es:plane3[di]
+	mov	ax,ds:masks[bx]
+	xor	ax,0FFFFh
+	and	dx,ax		; mask the sprite in the background
+
         add     si,2
         mov     ax,ds:sprite[si]
+	and	ax,ds:masks[bx]	; mask the sprite for transparency
+	or	ax,dx		; add the sprite and background togheter
         mov     es:plane3[di],ax
         add     si,2
-        add     di,2
-        loop    draw_sprite_x
-        sub     di,4
-        add     di,50h
-        cmp     di,bx
-        jl      draw_sprite_y
+	add	bx,2
+        add     di,28h
+        cmp     di,cx
+        jge     draw_sprite2
+	jmp	draw_sprite1
 
         ;mov     al,ds:anim
         ;cmp     al,0
@@ -1933,10 +1959,10 @@ draw_background      proc    far
 
         pop     bx                      ; get the y coordinate back
         push    bx
-        xchg    ax,bx                   ; put the y coord in AX
+        mov     ax,bx                   ; put the y coord in AX
 
         ; position = (y*80) + (x/8)
-        mov     bx, 80
+        mov     bx, 40
         mul     bx
         shr     cx, 1
         shr     cx, 1
@@ -1944,7 +1970,7 @@ draw_background      proc    far
         add     ax,cx
         mov     di,ax           ; Video memory offset
         mov     bx,ax
-        add     bx,500h 
+        add     bx,280h         ; end of screen address because 16 lines
 
         mov     ax,bseg
         mov     es,ax
@@ -1970,7 +1996,7 @@ draw_background_y:
         mov     ax,ds:tileset[si]
         mov     es:plane3[di],ax
         add     si,2
-        add     di,50h
+        add     di,28h
         cmp     di,bx
         jl      draw_background_y
 
@@ -2014,7 +2040,7 @@ print_text      proc    far
         mov     ax,bseg
         mov     es,ax
 
-        mov     di,659h         ; x:200,y:20 
+        mov     di,326h         ; x:100,y:20 
 print_char:
         mov     al,ds:[si]      ; load the char
         cmp     al,0
@@ -2024,10 +2050,10 @@ print_char:
         jne     print
 lineFeed:
         mov     ax,di
-        mov     bx,80
+        mov     bx,40
         div     bx
         sub     di,dx
-        add     di,665
+        add     di,146h         ; 40 bytes + 16 lines + 6 x_pos
         inc     si
         jmp     print_char
 print:
@@ -2052,11 +2078,11 @@ lineOfFont:
         mov     es:plane1[di],ax
         mov     es:plane2[di],ax
         mov     es:plane3[di],ax
-        add     di,80
+        add     di,40
         inc     cx
         cmp     cx,8
         jb      lineOfFont
-        sub     di,639
+        sub     di,319
         inc     si
         jmp     print_char
 
@@ -2100,7 +2126,7 @@ sendBufferToVRAM      proc    far
         out     dx, ax
 
         mov     di,0                ; Video memory offset
-        mov     cx,1f40h            ; 8000 rows
+        mov     cx,0fA0h            ; 8000 rows
         rep     movsw               ; Copy to video memory
 
 
@@ -2109,7 +2135,7 @@ sendBufferToVRAM      proc    far
         out     dx,ax
 
         mov     di,0                ; Video memory offset
-        mov     cx,1f40h            ; 8000 rows
+        mov     cx,0fA0h            ; 8000 rows
         rep     movsw                ; Copy to video memory
 
         ; Set Write Plane Mask to Plane 2
@@ -2117,7 +2143,7 @@ sendBufferToVRAM      proc    far
         out     dx,ax
 
         mov     di, 0                ; Video memory offset
-        mov     cx,1f40h            ; 8000 rows
+        mov     cx,0fA0h            ; 8000 rows
         rep     movsw                ; Copy to video memory
 
         ; Set Write Plane Mask to Plane 3
@@ -2125,7 +2151,7 @@ sendBufferToVRAM      proc    far
         out     dx, ax
 
         mov     di,0                ; Video memory offset
-        mov     cx,1f40h            ; 8000 rows
+        mov     cx,0fA0h            ; 8000 rows
         rep     movsw                ; Copy to video memory
 
         pop     dx
